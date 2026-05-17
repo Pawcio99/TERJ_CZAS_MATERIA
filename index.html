@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEREJ · Rozdział XX · Masa jako koszt lokalizacji</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;300;400&family=Syncopate:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})"></script>
+<style>
+/* ══════════════════════════════════════
+   ROOT VARIABLES — identyczny z TEREJ I–IV
+══════════════════════════════════════ */
+:root {
+  --bg: #05080f;
+  --bg2: #070c18;
+  --surface: #0d1525;
+  --panel: #111e38;
+  --border: rgba(255,255,255,0.06);
+  --border-amber: rgba(255,180,60,0.18);
+
+  --amber: #ffb43c;
+  --amber-dim: #b07a1a;
+  --amber-glow: rgba(255,180,60,0.12);
+  --teal: #2ee8c8;
+  --teal-dim: #0d6b5a;
+  --teal-glow: rgba(46,232,200,0.08);
+  --cyan: #60d4f8;
+  --violet: #b088f8;
+  --rose: #f86060;
+  --green: #7ae86e;
+
+  --text: #d0ddf0;
+  --text-mid: #7a90b8;
+  --text-mute: #3a4a68;
+  --hebrew: #ffd48a;
+
+  --font-body: 'Cormorant Garamond', Georgia, serif;
+  --font-ui: 'Josefin Sans', sans-serif;
+  --font-title: 'Syncopate', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-serif: 'Libre Baskerville', Georgia, serif;
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:17px; }
+body { background:var(--bg); color:var(--text); font-family:var(--font-body); line-height:1.9; overflow-x:hidden; }
+
+/* ── PROGRESS ── */
+#progress { position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg,var(--teal-dim),var(--teal),var(--amber)); z-index:9999; transition:width 0.1s linear; }
+
+/* ── COSMOS ── */
+#cosmos { position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+/* ══ NAV ══ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  display:flex; align-items:center; gap:0;
+  background:rgba(5,8,15,0.92); backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  height:48px; padding:0 1rem;
+  font-family:var(--font-ui); font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase;
+}
+.nav-brand { color:var(--amber); margin-right:auto; font-family:var(--font-title); font-size:0.54rem; letter-spacing:0.26em; }
+nav a {
+  color:var(--text-mute); text-decoration:none; padding:0 0.7rem;
+  height:48px; display:flex; align-items:center;
+  border-right:1px solid var(--border); transition:all 0.2s; white-space:nowrap;
+}
+nav a:first-of-type { border-left:1px solid var(--border); }
+nav a:hover { color:var(--teal); background:var(--teal-glow); }
+nav a.active { color:var(--amber); }
+
+/* ══ HERO ══ */
+#hero {
+  position:relative; z-index:1;
+  min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:5rem 2rem 4rem;
+  overflow:hidden;
+}
+#heroCanvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+.hero-content { position:relative; z-index:2; max-width:820px; }
+.hero-eyebrow {
+  font-family:var(--font-mono); font-size:0.58rem; letter-spacing:0.35em;
+  color:var(--teal-dim); text-transform:uppercase; margin-bottom:2.5rem;
+  border:1px solid rgba(46,232,200,0.15); display:inline-block;
+  padding:0.3rem 1rem; border-radius:2px;
+}
+.hero-hebrew {
+  font-size:clamp(1.8rem,4vw,3.2rem); color:var(--hebrew);
+  direction:rtl; letter-spacing:0.2em; line-height:1.3;
+  margin-bottom:0.5rem; font-family:var(--font-body);
+  text-shadow:0 0 80px rgba(255,212,138,0.25);
+}
+.hero-translit {
+  font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.3em;
+  color:var(--amber-dim); margin-bottom:2.5rem;
+}
+.hero-title {
+  font-family:var(--font-title); font-size:clamp(1rem,3vw,2.4rem);
+  font-weight:700; color:#fff; line-height:1.2; margin-bottom:1rem;
+  text-shadow:0 0 100px rgba(46,232,200,0.15);
+}
+.hero-sub {
+  font-family:var(--font-body); font-size:1.05rem; font-style:italic;
+  color:var(--text-mid); max-width:580px; margin:0 auto 3rem;
+  line-height:1.8;
+}
+
+/* ══ SOURCE LINKS GRID ══ */
+.source-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:0.75rem; margin:2rem auto; max-width:740px;
+}
+.source-card {
+  display:block; text-decoration:none;
+  background:linear-gradient(135deg,rgba(13,21,37,0.95),rgba(17,30,56,0.95));
+  border:1px solid rgba(255,180,60,0.22);
+  border-radius:10px; padding:1rem 1.2rem;
+  transition:all 0.3s; position:relative; overflow:hidden;
+}
+.source-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--amber),transparent); opacity:0; transition:opacity 0.3s; }
+.source-card:hover { border-color:rgba(255,180,60,0.5); transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,0.4),0 0 20px rgba(255,180,60,0.08); }
+.source-card:hover::before { opacity:1; }
+.sc-tag { font-family:var(--font-mono); font-size:0.48rem; letter-spacing:0.22em; color:var(--teal-dim); text-transform:uppercase; display:block; margin-bottom:0.3rem; }
+.sc-title { font-family:var(--font-title); font-size:0.62rem; letter-spacing:0.06em; color:var(--amber); display:block; margin-bottom:0.3rem; line-height:1.4; }
+.sc-desc { font-size:0.82rem; color:var(--text-mid); line-height:1.5; }
+.sc-url { font-family:var(--font-mono); font-size:0.48rem; color:var(--teal); display:block; margin-top:0.6rem; opacity:0.7; }
+
+.scroll-hint { font-family:var(--font-ui); font-size:0.5rem; letter-spacing:0.35em; color:var(--text-mute); animation:breathe 3s ease-in-out infinite; }
+.scroll-hint span { display:block; font-size:1.1rem; margin-top:0.3rem; }
+@keyframes breathe { 0%,100%{opacity:.3} 50%{opacity:.85} }
+
+/* ══ MAIN ══ */
+main { position:relative; z-index:1; max-width:860px; margin:0 auto; padding:0 1.8rem 8rem; }
+
+/* ══ CHAPTERS ══ */
+.chapter { margin-top:5rem; scroll-margin-top:60px; opacity:0; transform:translateY(24px); transition:opacity 0.75s ease, transform 0.75s ease; }
+.chapter.visible { opacity:1; transform:none; }
+.ch-meta { display:flex; align-items:center; gap:0.9rem; margin-bottom:0.7rem; }
+.ch-num { font-family:var(--font-mono); font-size:0.52rem; letter-spacing:0.28em; color:var(--teal-dim); border:1px solid rgba(46,232,200,0.2); padding:0.18rem 0.7rem; border-radius:2px; white-space:nowrap; }
+.ch-tag { font-family:var(--font-ui); font-size:0.48rem; letter-spacing:0.2em; color:var(--text-mute); }
+.ch-title { font-family:var(--font-title); font-size:clamp(1rem,3vw,1.9rem); font-weight:700; color:#e8f0ff; line-height:1.25; margin-bottom:0.3rem; }
+.ch-sub { font-family:var(--font-body); font-size:0.9rem; font-style:italic; color:var(--text-mute); padding-bottom:1.6rem; border-bottom:1px solid var(--border); margin-bottom:1.8rem; }
+.sec-title { font-family:var(--font-ui); font-size:0.66rem; letter-spacing:0.2em; color:var(--amber); margin:3rem 0 1.2rem; padding-left:1rem; border-left:2px solid var(--amber-dim); text-transform:uppercase; }
+
+p { margin-bottom:1.4rem; }
+.lead { font-size:1.18rem; line-height:2; color:#b8cae8; }
+em { color:var(--amber); font-style:italic; }
+.hl-teal { color:var(--teal); }
+.hl-violet { color:var(--violet); }
+sup.fn { font-family:var(--font-mono); font-size:0.55rem; color:var(--teal-dim); vertical-align:super; }
+
+/* ── Blockquotes ── */
+blockquote { margin:2.5rem 0; padding:1.8rem 2.2rem; background:rgba(46,232,200,0.04); border-left:2px solid var(--teal-dim); border-radius:0 8px 8px 0; }
+blockquote p { font-size:1.05rem; font-style:italic; color:#99b8d0; margin:0; line-height:1.85; }
+blockquote cite { display:block; margin-top:0.8rem; font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; color:var(--text-mute); font-style:normal; }
+blockquote.amber { background:rgba(255,180,60,0.04); border-left-color:var(--amber-dim); }
+blockquote.amber p { color:#d8c09a; }
+blockquote.violet { background:rgba(176,136,248,0.05); border-left-color:rgba(176,136,248,0.4); }
+blockquote.violet p { color:#c0aae8; }
+
+/* ── Formula box ── */
+.fbox {
+  margin:2rem 0; padding:1.4rem 2rem;
+  background:rgba(7,12,24,0.92); border:1px solid rgba(96,212,248,0.18);
+  border-radius:6px; position:relative; line-height:2;
+}
+.fbox[data-label]::before {
+  content:attr(data-label); position:absolute; top:-1px; right:1rem;
+  font-family:var(--font-mono); font-size:0.5rem; letter-spacing:0.2em;
+  color:var(--amber-dim); text-transform:uppercase;
+  background:rgba(12,20,42,0.95); padding:0 0.5rem;
+}
+.fbox .katex { color:var(--amber); }
+.fbox .fcomment { display:block; margin-top:0.8rem; font-size:0.84rem; color:var(--text-mid); font-style:italic; line-height:1.55; }
+
+/* ── Snote ── */
+.snote { background:rgba(46,232,200,0.04); border:1px solid rgba(46,232,200,0.15); padding:1rem 1.4rem; margin:1.8rem 0; border-radius:4px; }
+.snote::before { content:'nota naukowa'; font-family:var(--font-mono); font-size:0.48rem; letter-spacing:0.2em; color:var(--teal); text-transform:uppercase; display:block; margin-bottom:0.4rem; }
+.snote p { font-size:0.9rem; color:var(--text-mid); margin:0; }
+
+/* ── Discovery ── */
+.discovery { margin:2.2rem 0; padding:1.6rem 1.8rem; background:rgba(176,136,248,0.05); border:1px solid rgba(176,136,248,0.2); border-radius:10px; position:relative; overflow:hidden; }
+.discovery::before { content:'odkrycie strukturalne'; position:absolute; top:-1px; left:1.4rem; font-family:var(--font-mono); font-size:0.48rem; letter-spacing:0.2em; color:rgba(176,136,248,0.65); text-transform:uppercase; background:var(--bg); padding:0 0.5rem; }
+.discovery::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--violet),transparent); }
+.disc-title { font-family:var(--font-ui); font-size:0.72rem; letter-spacing:0.14em; color:var(--violet); margin-bottom:0.8rem; display:block; }
+.disc-body { font-size:0.9rem; color:var(--text-mid); line-height:1.7; }
+.disc-formula { font-family:var(--font-mono); font-size:0.78rem; color:#c0b0f8; text-align:center; margin:0.8rem 0; padding:0.7rem; background:rgba(10,18,45,0.8); border-radius:5px; border:1px solid rgba(176,136,248,0.15); }
+
+/* ── Postulate ── */
+.postulate {
+  margin:3rem 0; padding:2.2rem 2.5rem;
+  background:linear-gradient(135deg,rgba(12,20,42,0.97),rgba(20,12,45,0.97));
+  border:1px solid rgba(255,180,60,0.25); border-radius:14px;
+  position:relative; overflow:hidden; text-align:center;
+}
+.postulate::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--amber),var(--teal),transparent); }
+.postulate::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--teal),var(--amber),transparent); }
+.postulate-label { font-family:var(--font-mono); font-size:0.52rem; letter-spacing:0.3em; color:var(--amber-dim); text-transform:uppercase; display:block; margin-bottom:1.2rem; }
+.postulate-text { font-size:0.92rem; color:var(--text-mid); font-style:italic; line-height:1.75; max-width:680px; margin:1rem auto 0; }
+
+/* ── Vis section ── */
+.vis-section { margin:2.5rem 0; background:rgba(7,12,24,0.85); border:1px solid rgba(46,232,200,0.12); border-radius:14px; overflow:hidden; }
+.vis-header { padding:0.8rem 1.5rem; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:1rem; font-family:var(--font-ui); font-size:0.54rem; letter-spacing:0.22em; color:var(--teal-dim); text-transform:uppercase; }
+.vis-dot { width:7px; height:7px; border-radius:50%; background:var(--teal); animation:vp 2s ease-in-out infinite; }
+@keyframes vp { 0%,100%{opacity:.4} 50%{opacity:1} }
+.vis-tabs { display:flex; border-bottom:1px solid var(--border); background:rgba(5,8,15,0.6); }
+.vis-tab { font-family:var(--font-mono); font-size:0.52rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-mute); background:none; border:none; padding:0.65rem 1rem; cursor:pointer; border-bottom:2px solid transparent; position:relative; top:1px; transition:color 0.2s; }
+.vis-tab:hover { color:var(--amber); }
+.vis-tab.on { color:var(--teal); border-bottom-color:var(--teal); }
+.vis-panel { display:none; }
+.vis-panel.on { display:block; }
+canvas.vis-canvas { display:block; width:100%; }
+.vis-desc { font-family:var(--font-body); font-style:italic; font-size:0.84rem; color:var(--text-mid); background:rgba(5,8,15,0.7); padding:0.8rem 1.4rem; border-top:1px solid var(--border); line-height:1.6; }
+.vis-controls { display:flex; flex-wrap:wrap; gap:1.2rem; padding:1rem 1.4rem; background:rgba(7,12,24,0.7); border-top:1px solid var(--border); }
+.vc { display:flex; flex-direction:column; gap:0.35rem; min-width:100px; flex:1; }
+.vc-lbl { font-family:var(--font-mono); font-size:0.5rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-mute); }
+.vc-val { font-family:var(--font-mono); font-size:0.65rem; color:var(--amber); }
+input[type=range] { -webkit-appearance:none; width:100%; height:2px; background:rgba(255,255,255,0.1); cursor:pointer; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:12px; height:12px; background:var(--amber); border-radius:50%; }
+
+/* ── Theorem list ── */
+.theorem-list { margin:2rem 0; display:flex; flex-direction:column; gap:0.8rem; }
+.theorem { border-radius:8px; padding:1.2rem 1.5rem 1.2rem 1.8rem; border:1px solid rgba(255,180,60,0.15); background:rgba(12,20,42,0.7); position:relative; overflow:hidden; }
+.theorem::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--amber-dim); }
+.theorem-n { font-family:var(--font-mono); font-size:0.52rem; letter-spacing:0.25em; color:var(--amber-dim); display:block; margin-bottom:0.35rem; }
+.theorem-body { font-size:0.88rem; color:var(--text-mid); line-height:1.65; }
+.theorem-body strong { color:var(--amber); }
+
+/* ── Operator pair ── */
+.op-pair { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin:2rem 0; }
+@media(max-width:560px){ .op-pair{grid-template-columns:1fr;} }
+.opcard { border-radius:12px; padding:1.6rem 1.4rem; }
+.opcard.plus { background:rgba(46,232,200,0.06); border:1px solid rgba(46,232,200,0.2); }
+.opcard.minus { background:rgba(176,136,248,0.06); border:1px solid rgba(176,136,248,0.2); }
+.op-sym { font-family:var(--font-title); font-size:2rem; font-weight:700; display:block; margin-bottom:0.4rem; }
+.opcard.plus .op-sym { color:var(--teal); }
+.opcard.minus .op-sym { color:var(--violet); }
+.op-nm { font-family:var(--font-ui); font-size:0.62rem; letter-spacing:0.15em; display:block; margin-bottom:0.8rem; }
+.opcard.plus .op-nm { color:var(--teal); }
+.opcard.minus .op-nm { color:var(--violet); }
+.op-body { font-size:0.86rem; color:var(--text-mid); line-height:1.65; }
+
+/* ── Hebrew grid ── */
+.heb-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1rem; margin:2rem 0; }
+.hcard { background:rgba(255,212,138,0.04); border:1px solid var(--border-amber); border-radius:10px; padding:1.4rem 1.2rem; position:relative; overflow:hidden; transition:transform 0.2s, background 0.2s; }
+.hcard:hover { transform:translateY(-2px); background:rgba(255,212,138,0.07); }
+.hcard::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--amber),transparent); }
+.hcard-heb { font-size:2.1rem; color:var(--hebrew); direction:rtl; display:block; line-height:1.2; margin-bottom:0.3rem; }
+.hcard-tr { font-family:var(--font-mono); font-size:0.62rem; color:var(--amber); letter-spacing:0.18em; display:block; margin-bottom:0.25rem; }
+.hcard-root { font-family:var(--font-mono); font-size:0.55rem; color:var(--text-mute); display:block; margin-bottom:0.8rem; }
+.hcard-def { font-size:0.86rem; color:var(--text-mid); line-height:1.6; }
+
+/* ── Pull dark ── */
+.pull-dark { margin:3rem 0; padding:1.8rem 2.5rem; background:rgba(10,18,45,0.9); border:1px solid var(--border); border-radius:10px; }
+.pull-dark p { font-family:var(--font-title); font-size:0.95rem; font-style:italic; line-height:1.7; text-align:center; color:rgba(200,220,200,0.9); margin:0; }
+
+/* ── Div rune ── */
+.div-rune { text-align:center; margin:4rem 0; position:relative; }
+.div-rune::before,.div-rune::after { content:''; position:absolute; top:50%; height:1px; background:linear-gradient(to right,transparent,var(--border)); width:40%; }
+.div-rune::before { right:53%; }
+.div-rune::after { left:53%; background:linear-gradient(to left,transparent,var(--border)); }
+.div-rune span { font-family:var(--font-title); font-size:0.9rem; color:var(--teal-dim); opacity:.5; position:relative; z-index:1; }
+
+/* ── Footnotes ── */
+.fn-section { margin-top:2rem; padding-top:1.2rem; border-top:1px solid rgba(46,232,200,0.15); }
+.fn-label { font-family:var(--font-mono); font-size:0.5rem; letter-spacing:0.25em; color:var(--teal-dim); text-transform:uppercase; display:block; margin-bottom:0.6rem; }
+.fn-item { display:flex; gap:0.7rem; align-items:baseline; margin-bottom:0.45rem; }
+.fn-n { font-family:var(--font-mono); font-size:0.62rem; color:var(--teal); min-width:1.5rem; flex-shrink:0; }
+.fn-text { font-size:0.8rem; color:var(--text-mute); font-style:italic; line-height:1.55; }
+
+/* ── Ext links ── */
+.ext-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin:2.2rem 0; }
+.ext-card { display:block; text-decoration:none; background:rgba(46,232,200,0.05); border:1px solid rgba(46,232,200,0.15); border-radius:10px; padding:1.2rem 1.4rem; transition:all 0.2s; }
+.ext-card:hover { background:rgba(46,232,200,0.1); border-color:rgba(46,232,200,0.35); transform:translateY(-2px); }
+.ext-lbl { font-family:var(--font-mono); font-size:0.53rem; letter-spacing:0.2em; color:var(--teal-dim); text-transform:uppercase; display:block; margin-bottom:0.35rem; }
+.ext-title { font-family:var(--font-ui); font-size:0.82rem; color:var(--cyan); display:block; margin-bottom:0.3rem; letter-spacing:0.04em; }
+.ext-desc { font-size:0.8rem; color:var(--text-mute); line-height:1.5; }
+
+/* ── Scale table ── */
+.scale-table { width:100%; border-collapse:collapse; margin:2rem 0; font-size:0.84rem; }
+.scale-table th { font-family:var(--font-mono); font-size:0.52rem; letter-spacing:0.18em; color:var(--teal-dim); text-transform:uppercase; padding:0.6rem 0.8rem; border-bottom:1px solid rgba(46,232,200,0.2); text-align:left; font-weight:400; }
+.scale-table td { padding:0.65rem 0.8rem; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:top; line-height:1.5; }
+.scale-table tr:hover td { background:rgba(46,232,200,0.02); }
+.st-key { font-family:var(--font-mono); font-size:0.7rem; color:var(--teal); }
+.st-amber { color:var(--amber); }
+.st-violet { color:var(--violet); }
+.st-mute { color:var(--text-mid); font-size:0.83rem; }
+
+/* ── Part nav ── */
+.part-nav { display:flex; justify-content:center; gap:0.8rem; margin-top:5rem; flex-wrap:wrap; }
+.part-nav a { font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.18em; text-decoration:none; color:var(--text-mute); border:1px solid var(--border); padding:0.5rem 1.2rem; border-radius:3px; transition:all 0.2s; text-transform:uppercase; }
+.part-nav a:hover { color:var(--teal); border-color:rgba(46,232,200,0.3); background:var(--teal-glow); }
+.part-nav a.current { color:var(--amber); border-color:rgba(255,180,60,0.3); }
+
+/* ── Bib ── */
+.bib { margin-top:4rem; padding-top:2rem; border-top:1px solid rgba(46,232,200,0.12); }
+.bib-title { font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.3em; color:var(--teal-dim); text-transform:uppercase; display:block; margin-bottom:1.4rem; }
+.bib-item { display:flex; gap:0.8rem; align-items:baseline; margin-bottom:0.7rem; }
+.bib-n { font-family:var(--font-mono); font-size:0.6rem; color:var(--amber); min-width:2rem; flex-shrink:0; }
+.bib-text { font-size:0.82rem; color:var(--text-mid); line-height:1.6; }
+
+/* ── Footer ── */
+footer { position:relative; z-index:1; max-width:860px; margin:0 auto; padding:4rem 1.8rem 6rem; border-top:1px solid rgba(46,232,200,0.15); margin-top:6rem; }
+.footer-inner { background:linear-gradient(135deg,rgba(12,20,42,0.97),rgba(20,12,45,0.97)); border:1px solid rgba(255,180,60,0.2); border-radius:14px; padding:2.5rem 3rem; position:relative; overflow:hidden; }
+.footer-inner::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,rgba(255,180,60,0.5),rgba(46,232,200,0.5),transparent); }
+.footer-inner::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,rgba(46,232,200,0.5),rgba(255,180,60,0.5),transparent); }
+.footer-author { display:flex; align-items:flex-start; gap:2rem; flex-wrap:wrap; margin-bottom:2rem; }
+.footer-avatar { width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,rgba(255,180,60,0.15),rgba(46,232,200,0.1)); border:1.5px solid rgba(255,180,60,0.35); display:flex; align-items:center; justify-content:center; font-family:var(--font-title); font-size:1.1rem; color:rgba(255,180,60,0.9); flex-shrink:0; }
+.footer-meta { flex:1; }
+.footer-role { font-family:var(--font-mono); font-size:0.52rem; letter-spacing:0.25em; color:var(--teal-dim); text-transform:uppercase; display:block; margin-bottom:0.3rem; }
+.footer-name { font-family:var(--font-body); font-size:1.45rem; color:#e8f0ff; display:block; margin-bottom:0.25rem; }
+.footer-series { font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.15em; color:var(--amber); display:block; margin-bottom:0.5rem; }
+.footer-bio { font-size:0.86rem; color:var(--text-mid); font-style:italic; line-height:1.6; }
+.license-block { display:grid; grid-template-columns:auto 1fr; gap:1.5rem; align-items:start; padding-top:1.5rem; border-top:1px solid rgba(46,232,200,0.15); }
+.license-badge { padding:0.5rem 0.9rem; border:1px solid rgba(46,232,200,0.3); border-radius:5px; font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.2em; color:rgba(46,232,200,0.8); white-space:nowrap; background:rgba(46,232,200,0.05); }
+.license-text { font-size:0.83rem; color:var(--text-mid); line-height:1.65; }
+.cite-block { margin-top:0.8rem; padding:0.8rem 1.1rem; background:rgba(10,18,45,0.7); border-left:2px solid rgba(255,180,60,0.4); border-radius:0 5px 5px 0; font-family:var(--font-mono); font-size:0.62rem; color:rgba(200,220,200,0.85); line-height:1.6; }
+.footer-bottom { margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
+.footer-ver { font-family:var(--font-mono); font-size:0.5rem; letter-spacing:0.15em; color:rgba(46,232,200,0.35); }
+.footer-date { font-family:var(--font-mono); font-size:0.5rem; letter-spacing:0.15em; color:rgba(255,180,60,0.4); }
+
+@media(max-width:700px) {
+  nav .nav-links { display:none; }
+  .license-block { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<canvas id="cosmos"></canvas>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <span class="nav-brand">TEREJ · XX</span>
+  <a href="#wstep">Wstęp</a>
+  <a href="#masa">Masa</a>
+  <a href="#czas">Czas</a>
+  <a href="#informacja">Informacja</a>
+  <a href="#terj">Synteza</a>
+  <a href="#bibliografia">Źródła</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow">TEREJ · Komentarz Naukowy · Rozdział XX · Maj 2026</div>
+    <div class="hero-hebrew">מַשָּׂא הַזְּמַן</div>
+    <div class="hero-translit">MASSA HA-ZMAN · ciężar czasu</div>
+    <h1 class="hero-title">Masa jako koszt lokalizacji:<br>czas lokalny, materia i informacja<br>jako matryce relacyjne</h1>
+    <p class="hero-sub">Masa nie jest substancją — jest kosztem. Czas nie jest absolutny — jest lokalny. Materia nie trwa — zapisuje. Trzy twierdzenia, jedna struktura.</p>
+
+    <!-- SOURCE LINKS -->
+    <div class="source-grid">
+      <a href="https://pawcio99.github.io/TEREJ_IX/" target="_blank" rel="noopener" class="source-card">
+        <span class="sc-tag">Praca macierzysta · 2026</span>
+        <span class="sc-title">TEREJ IX — Fraktal, Kryształ Czasu i Niezmienniczość Ĝ</span>
+        <p class="sc-desc">Pełna teoria: od kwantu do cywilizacji, jeden mechanizm generujący.</p>
+        <span class="sc-url">pawcio99.github.io/TEREJ_IX/ ↗</span>
+      </a>
+      <a href="https://pawcio99.github.io/YHWH-_Entropia/" target="_blank" rel="noopener" class="source-card">
+        <span class="sc-tag">Working Paper · Entropia</span>
+        <span class="sc-title">YHWH i Entropia</span>
+        <p class="sc-desc">$S = k_B \ln\Omega$ i hayah-hoveh-yihyeh jako dwa opisy tej samej zasady procesualnej.</p>
+        <span class="sc-url">pawcio99.github.io/YHWH-_Entropia/ ↗</span>
+      </a>
+      <a href="https://pawcio99.github.io/EDEN_ENTROPIA/" target="_blank" rel="noopener" class="source-card">
+        <span class="sc-tag">Esej · Ofiara</span>
+        <span class="sc-title">Entropia i Ofiara</span>
+        <p class="sc-desc">Demon Maxwella jako Cherub. Koszt gradientu. Dwa rodzaje ofiary w termodynamice.</p>
+        <span class="sc-url">pawcio99.github.io/EDEN_ENTROPIA/ ↗</span>
+      </a>
+      <a href="https://pawcio99.github.io/SEMANTYKA_GRADIENTOW/" target="_blank" rel="noopener" class="source-card">
+        <span class="sc-tag">Working Paper · Semantyka</span>
+        <span class="sc-title">Semantyka Gradientów</span>
+        <p class="sc-desc">Rdzeń hebrajski jako formalizm gradientu — analiza lingwistyczna Rdz 1–3.</p>
+        <span class="sc-url">pawcio99.github.io/SEMANTYKA_GRADIENTOW/ ↗</span>
+      </a>
+      <a href="https://pawcio99.github.io/Gradient_Entropia/" target="_blank" rel="noopener" class="source-card">
+        <span class="sc-tag">Working Paper · Prigogine</span>
+        <span class="sc-title">Gradient i Entropia</span>
+        <p class="sc-desc">Struktury dysypatywne. Zasada Englanda. Formalizm gradientu entropii.</p>
+        <span class="sc-url">pawcio99.github.io/Gradient_Entropia/ ↗</span>
+      </a>
+    </div>
+
+    <div class="scroll-hint">czytaj dalej<span>↓</span></div>
+  </div>
+</section>
+
+<main>
+
+<!-- ══ ROZDZIAŁ: WSTĘP ══ -->
+<section class="chapter" id="wstep">
+  <div class="ch-meta">
+    <span class="ch-num">§ 1 · WPROWADZENIE</span>
+    <span class="ch-tag">PYTANIE O NATURĘ MASY · RELACYJNOŚĆ · TERJ</span>
+  </div>
+  <h2 class="ch-title">Pytanie, które fizyka odkłada</h2>
+  <p class="ch-sub">Masa jako problem otwarty · Trzy rejestry jednej struktury · Postulat rozdziału</p>
+
+  <p class="lead">Pytanie, czym jest masa, należy do najstarszych i najgłębiej nierozwiązanych zagadnień fizyki teoretycznej. W mechanice Newtona masa pojawia się podwójnie: jako opór wobec przyspieszenia i jako źródło grawitacji. Einstein zrównał oba aspekty. Higgs wyjaśnił ich pochodzenie. Ale żaden z nich nie odpowiedział na pytanie ontologiczne: <em>dlaczego coś w ogóle ma masę?</em></p>
+
+  <p>Niniejszy rozdział formułuje odpowiedź TERJ: <em>masa jest kosztem lokalizacji</em> — miarą relacji danej konfiguracji pola z kondensatem próżniowym. Z tej definicji wynikają dwa twierdzenia pochodne: czas własny jest lokalny dla danej masy i stanowi zapis jej historii relacyjnej; materia funkcjonuje jako nośnik i matryca informacji o minionych i przyszłych przemianach.</p>
+
+  <div class="snote"><p>Analiza przebiega przez trzy rejestry jednocześnie: formalizm fizyki teoretycznej (mechanizm Higgsa, metryka, entropia informacyjna), ontologię relacyjną w aparacie TERJ oraz semantykę hebrajską jako niezależne źródło etymologiczno-strukturalne. TERJ traktuje zbieżność tych rejestrów jako dowód spójności, nie koincydencję.</p></div>
+
+  <div class="op-pair">
+    <div class="opcard plus">
+      <span class="op-sym">m</span>
+      <span class="op-nm">Masa jako koszt</span>
+      <p class="op-body">Nie własność substancjalna cząstki. Miara siły jej sprzężenia z kondensatem Higgsa — energetyczny koszt utrzymania lokalnej konfiguracji pola w przestrzeni relacyjnej. Bez pola kondensatu: $m = 0$, foton.</p>
+    </div>
+    <div class="opcard minus">
+      <span class="op-sym">τ</span>
+      <span class="op-nm">Czas własny jako historia</span>
+      <p class="op-body">Nie absolutna skala wszechświata. Całka po trajektorii konkretnej masy w zakrzywionej metryce — akumulacja kosztów wszystkich pozycjonowań. Każda masa nosi swój własny czas jako niepowtarzalny autobiogram relacyjny.</p>
+    </div>
+  </div>
+</section>
+
+<div class="div-rune"><span>◈</span></div>
+
+<!-- ══ ROZDZIAŁ: MASA ══ -->
+<section class="chapter" id="masa">
+  <div class="ch-meta">
+    <span class="ch-num">§ 2 · MASA</span>
+    <span class="ch-tag">MECHANIZM HIGGSA · PROPAGATOR · SPRZĘŻENIE YUKAWA</span>
+  </div>
+  <h2 class="ch-title">Masa jako emergencja relacyjna</h2>
+  <p class="ch-sub">Potencjał Higgsa · Spontaniczne złamanie symetrii · Biegun propagatora</p>
+
+  <p class="lead">W Standardowym Modelu masa pojawia się jako konsekwencja jednej relacji: sprzężenia pola cząstki z kondensatem próżniowym Higgsa. Przed tym sprzężeniem — przy $\langle\phi\rangle = 0$ — wszystkie pola są bezmasowe. Po złamaniu symetrii, gdy $\langle\phi\rangle = v \neq 0$, masa wyłania się jako geometryczna konieczność.</p>
+
+  <div class="fbox" data-label="Mechanizm Higgsa · 1964">
+    $$V(\phi) = -\mu^2|\phi|^2 + \lambda|\phi|^4 \qquad v = \sqrt{\frac{\mu^2}{\lambda}} \approx 246\ \text{GeV}$$
+    $$m_f = \frac{y_f \cdot v}{\sqrt{2}} \qquad \text{gdzie } y_f \text{ — stała Yukawy}$$
+    <span class="fcomment">Masa fermionu jest iloczynem stałej sprzężenia $y_f$ i wartości oczekiwanej próżni $v$. To rozróżnienie jest fundamentalnie ontologiczne: masa opisuje siłę relacji pola z kondensatem, nie własność substancjalną cząstki. Inaczej mówiąc — jest kosztem lokalizacji w próżni o $\langle\phi\rangle \neq 0$.</span>
+  </div>
+
+  <div class="vis-section">
+    <div class="vis-header"><div class="vis-dot"></div>Interaktywna wizualizacja · Propagator i biegun masy</div>
+    <div class="vis-tabs">
+      <button class="vis-tab on" data-panel="propVis">Biegun propagatora</button>
+      <button class="vis-tab" data-panel="higgsVis">Potencjał Higgsa</button>
+      <button class="vis-tab" data-panel="massEmerg">Emergencja masy</button>
+    </div>
+    <div class="vis-body">
+      <div class="vis-panel on" id="propVis">
+        <canvas class="vis-canvas" id="propCanvas" height="340"></canvas>
+        <div class="vis-controls">
+          <div class="vc"><span class="vc-lbl">Masa m [GeV]</span><input type="range" id="pMass" min="0" max="100" value="40"><span class="vc-val" id="pMassV">40</span></div>
+          <div class="vc"><span class="vc-lbl">Rotacja ε</span><input type="range" id="pEps" min="1" max="30" value="8"><span class="vc-val" id="pEpsV">8</span></div>
+        </div>
+        <div class="vis-desc">Propagator skalarny $G(p) = i/(p^2 - m^2 + i\varepsilon)$ w przestrzeni pędowej. Amplituda (jasność) jako funkcja $p^2$. Biegun przy $p^2 = m^2$ (bursztynowy okrąg) — to miejsce gdzie cząstka propaguje się swobodnie. <em>Masa jest geometrycznym przesunięciem bieguna</em>: foton leży na $p^2 = 0$ (stożek świetlny), fermion — wewnątrz, na $p^2 = m^2$.</div>
+      </div>
+      <div class="vis-panel" id="higgsVis">
+        <canvas class="vis-canvas" id="higgsV2" height="340"></canvas>
+        <div class="vis-controls">
+          <div class="vc"><span class="vc-lbl">μ² (złamanie)</span><input type="range" id="hMu2" min="0" max="100" value="65"><span class="vc-val" id="hMu2V">65</span></div>
+          <div class="vc"><span class="vc-lbl">Rotacja</span><input type="range" id="hRot2" min="0" max="360" value="25"><span class="vc-val" id="hRot2V">25°</span></div>
+        </div>
+        <div class="vis-desc">Potencjał $V(\phi) = -\mu^2|\phi|^2 + \lambda|\phi|^4$. Przy $\mu^2 = 0$: stan symetryczny, jedno minimum w $\phi=0$ — brak masy, kairos. Przy $\mu^2 > 0$: minimum kapeluszowe na okręgu $|\phi| = v$ — złamanie symetrii, wyłonienie chronos i masy. Bursztynowy pierścień = stan fizyczny próżni.</div>
+      </div>
+      <div class="vis-panel" id="massEmerg">
+        <canvas class="vis-canvas" id="massCanvas" height="340"></canvas>
+        <div class="vis-controls">
+          <div class="vc"><span class="vc-lbl">Sprzężenie $y_f$</span><input type="range" id="yukawa" min="0" max="100" value="50"><span class="vc-val" id="yukawaV">0.50</span></div>
+        </div>
+        <div class="vis-desc">Emergencja masy fermionów w funkcji stałej Yukawy $y_f$. Elektron: $y_e \approx 0.0028$, masywny boson top: $y_t \approx 1.0$. Masa jest relacyjną charakterystyką pola — miarą jego "wrażliwości" na obecność kondensatu. Nie istnieje masa bez kondensatu; nie istnieje kondensmat bez pola które go "odczuwa".</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="discovery">
+    <span class="disc-title">Odkrycie strukturalne: Masa jako Ĥ(Ĝ)</span>
+    <div class="disc-body">
+      <p>W aparacie TERJ kondensmat Higgsa pełni rolę struktury relacyjnej — operatora Ĝ (gradient potencjalności), wobec której pozycjonuje się każde pole. Wartość sprzężenia $y_f$ jest relacyjną charakterystyką pola. Masa wyłania się z tej relacji jako operator Ĥ (forma, zamknięcie, koszt lokalizacji). Masa jest Ĥ aplikowanym na Ĝ — formą wyłaniającą się z potencjalności.</p>
+      <div class="disc-formula">$m_f = y_f \cdot v/\sqrt{2} \equiv \hat{H}(\hat{G})$<br>Foton: $y_\gamma = 0 \Rightarrow m = 0$ (na stożku, niesprzężony z kondensatem Higgsa)<br>Elektron: $y_e \approx 0.0028 \Rightarrow m_e = 0.511$ MeV (wewnątrz stożka, sprzężony)</div>
+    </div>
+  </div>
+
+  <div class="fn-section">
+    <span class="fn-label">Źródła — §2</span>
+    <div class="fn-item"><span class="fn-n">¹</span><span class="fn-text">Higgs, P.W. (1964): Broken Symmetries and the Masses of Gauge Bosons. <em>Physical Review Letters</em> 13, 508–509. Nobel 2013.</span></div>
+    <div class="fn-item"><span class="fn-n">²</span><span class="fn-text">Englert, F., Brout, R. (1964): Broken Symmetry and the Mass of Gauge Vector Mesons. <em>Physical Review Letters</em> 13, 321–323.</span></div>
+    <div class="fn-item"><span class="fn-n">³</span><span class="fn-text">Weinberg, S. (1995): <em>The Quantum Theory of Fields, Vol. I</em>. Cambridge University Press. Propagator skalarny i geometria bieguna.</span></div>
+  </div>
+</section>
+
+<div class="div-rune"><span>◈</span></div>
+
+<!-- ══ ROZDZIAŁ: CZAS ══ -->
+<section class="chapter" id="czas">
+  <div class="ch-meta">
+    <span class="ch-num">§ 3 · CZAS WŁASNY</span>
+    <span class="ch-tag">OTW · METRYKA · HISTORIA RELACYJNA · ASYMETRIA</span>
+  </div>
+  <h2 class="ch-title">Czas własny jako autobiogram masy</h2>
+  <p class="ch-sub">$d\tau = \sqrt{g_{\mu\nu} dx^\mu dx^\nu}$ · Masa mierzy czas i tworzy jego warunki · Strzałka informacyjna</p>
+
+  <p class="lead">Ogólna teoria względności zastępuje absolutny czas Newtona geometrią lokalną: czas własny $\tau$ obserwatora jest całką po konkretnej trajektorii w zakrzywionej przestrzeni. Masa zakrzywia tę przestrzeń — jest równocześnie podmiotem pomiaru czasu i przyczyną kształtu metryki, w której ten pomiar przebiega.</p>
+
+  <div class="fbox" data-label="Czas własny · Einstein 1915">
+    $$d\tau = \sqrt{g_{\mu\nu}\,dx^\mu dx^\nu} \qquad G_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4}\,T_{\mu\nu}$$
+    <span class="fcomment">Tensor $T_{\mu\nu}$ (masa-energia) zakrzywia metrykę $g_{\mu\nu}$, ta zaś wyznacza tempo upływu $d\tau$ wzdłuż linii świata. Materia mierzy czas, ponieważ tworzy warunki jego mierzenia. Czas własny jest ściśle lokalny i niepowtarzalny — dwie masy o identycznej masie spoczynkowej, które przeszły różne trajektorie, wykazują różne narosłe $\tau$.</span>
+  </div>
+
+  <div class="vis-section">
+    <div class="vis-header"><div class="vis-dot"></div>Czas własny jako trajektoria relacyjna</div>
+    <div class="vis-tabs">
+      <button class="vis-tab on" data-panel="properTime">Czas własny 3D</button>
+      <button class="vis-tab" data-panel="twinParadox">Bliźnięta Langevina</button>
+      <button class="vis-tab" data-panel="arrowTime">Strzałka czasu</button>
+    </div>
+    <div class="vis-body">
+      <div class="vis-panel on" id="properTime">
+        <canvas class="vis-canvas" id="ptCanvas" height="360"></canvas>
+        <div class="vis-controls">
+          <div class="vc"><span class="vc-lbl">Masa m</span><input type="range" id="ptMass" min="1" max="100" value="50"><span class="vc-val" id="ptMassV">50</span></div>
+          <div class="vc"><span class="vc-lbl">Prędkość v/c</span><input type="range" id="ptVel" min="1" max="98" value="40"><span class="vc-val" id="ptVelV">0.40</span></div>
+        </div>
+        <div class="vis-desc">Linie świata trzech obiektów w przestrzeni-czasie. Cząstka spoczynkowa (bursztyn): czas własny biegnie maksymalnie. Cząstka poruszająca się (teal): czas własny spowalnia ($\gamma$ czynnik). Foton (złoty): $d\tau = 0$ — dla fotonu czas nie płynie w ogóle. <em>Masa jest warunkiem koniecznym posiadania czasu własnego.</em></div>
+      </div>
+      <div class="vis-panel" id="twinParadox">
+        <canvas class="vis-canvas" id="twinCanvas" height="360"></canvas>
+        <div class="vis-controls">
+          <div class="vc"><span class="vc-lbl">Prędkość bliźniaka B</span><input type="range" id="twVel" min="10" max="99" value="80"><span class="vc-val" id="twVelV">0.80c</span></div>
+        </div>
+        <div class="vis-desc">Paradoks bliźniąt Langevina bez paradoksu. Bliźniak A (spoczynek, bursztyn) i B (podróż $v/c$, teal). Po spotkaniu B jest młodszy — nie dlatego że "ktoś się myli", lecz dlatego że <em>każda masa akumuluje czas własny proporcjonalnie do kosztu swojej trajektorii w zakrzywionej geometrii.</em> Różnica $\Delta\tau$ to obiektywna miara różnicy historii relacyjnych.</div>
+      </div>
+      <div class="vis-panel" id="arrowTime">
+        <canvas class="vis-canvas" id="arrowCanvas" height="360"></canvas>
+        <div class="vis-controls">
+          <div class="vc"><span class="vc-lbl">Entropia S</span><input type="range" id="arEntropy" min="10" max="100" value="55"><span class="vc-val" id="arEntropyV">55</span></div>
+        </div>
+        <div class="vis-desc">Strzałka czasu jako strzałka informacyjna. Twierdzenie Landauera: kasowanie jednego bitu = co najmniej $k_BT\ln 2$ ciepła. Odwrócenie strzałki wymagałoby cofnięcia wszystkich nieodwracalnych operacji. Czas płynie w kierunku wzrostu entropii informacyjnej — <em>materia ponosi ten koszt nieustannie i przechowuje historię jako stan obecny będący całką przeszłości.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="heb-grid">
+    <div class="hcard">
+      <span class="hcard-heb">עוֹלָם</span>
+      <span class="hcard-tr">ʿOLAM</span>
+      <span class="hcard-root">rdzeń עלם · ukryć, zasłonić</span>
+      <span class="hcard-def">Zwykle tłumaczone "wieczność" lub "świat". Etymologicznie: <strong style="color:var(--amber)">to co ukryte</strong> — głębia niedostępna bezpośredniemu oglądowi. W TERJ: czas jako ʿolam jest zakodowaną historią relacyjną masy, którą odczytujemy wyłącznie ze stanu obecnego.</span>
+    </div>
+    <div class="hcard">
+      <span class="hcard-heb">הָיָה</span>
+      <span class="hcard-tr">HAYAH</span>
+      <span class="hcard-root">imperfectum · bycie-zdarzeniowe</span>
+      <span class="hcard-def">Czasownik "być" w formie niedokonanej — bycie jako stawanie się, nie jako stan statyczny. YHWH = hayah⊕hoveh⊕yihyeh = operator $dS/dt$ w przestrzeni semantycznej. <strong style="color:var(--teal)">Czas własny masy jest jej hayah</strong> — nieustannym byciem-w-przemianach.</span>
+    </div>
+    <div class="hcard">
+      <span class="hcard-heb">כְּתִיבָה</span>
+      <span class="hcard-tr">KETIVAH</span>
+      <span class="hcard-root">rdzeń כ-ת-ב · zapisywać</span>
+      <span class="hcard-def">Zapis w tradycji hebrajskiej jako czynność ontologicznie konstytutywna — nie wtórna reprezentacja, lecz utrwalenie rzeczywistości. Stan mikroskopowy materii jest dosłownie <strong style="color:var(--amber)">ketivah</strong> jej historii relacyjnej.</span>
+    </div>
+    <div class="hcard">
+      <span class="hcard-heb">מָשַׁח</span>
+      <span class="hcard-tr">MASACH</span>
+      <span class="hcard-root">namaszczenie · nadanie tożsamości relacyjnej</span>
+      <span class="hcard-def">Czynność konstytuująca nową relację między podmiotem a sacrum. W TERJ: źródło pojęcia <em>masah-capacity</em> — formalnej miary zdolności układu do generowania i podtrzymywania relacji emergentnych.</span>
+    </div>
+  </div>
+
+  <div class="fn-section">
+    <span class="fn-label">Źródła — §3</span>
+    <div class="fn-item"><span class="fn-n">⁴</span><span class="fn-text">Einstein, A. (1915): Die Feldgleichungen der Gravitation. <em>Sitzungsberichte der Preußischen Akademie der Wissenschaften</em>. Ogólna teoria względności i czas własny.</span></div>
+    <div class="fn-item"><span class="fn-n">⁵</span><span class="fn-text">Landauer, R. (1961): Irreversibility and heat generation in the computing process. <em>IBM Journal of R&D</em> 5(3), 183–191. Fizyczny koszt kasowania informacji.</span></div>
+    <div class="fn-item"><span class="fn-n">⁶</span><span class="fn-text">Rovelli, C. (1996): Relational Quantum Mechanics. <em>Int. J. Theor. Phys.</em> 35, 1637–1678. Czas jako własność relacji, nie absolutna skala.</span></div>
+  </div>
+</section>
+
+<div class="div-rune"><span>◈</span></div>
+
+<!-- ══ ROZDZIAŁ: INFORMACJA ══ -->
+<section class="chapter" id="informacja">
+  <div class="ch-meta">
+    <span class="ch-num">§ 4 · INFORMACJA</span>
+    <span class="ch-tag">ENTROPIA VON NEUMANNA · HOLOGRAFIA · MATERIA JAKO NOŚNIK</span>
+  </div>
+  <h2 class="ch-title">Materia jako księga i matryca</h2>
+  <p class="ch-sub">$S = -\text{Tr}(\rho\ln\rho)$ · Zasada holograficzna · Podwójny status ontologiczny</p>
+
+  <p class="lead">Materia jest nośnikiem informacji o minionych przemianach i matrycą probabilistyczną stanów przyszłych. To nie metafora — to twierdzenie fizyczne. Unitarna ewolucja kwantowa nie traci informacji, a zasada holograficzna Beckenstein-Hawkinga wskazuje, że pojemność informacyjna obszaru jest proporcjonalna do jego granicy, nie objętości.</p>
+
+  <div class="fbox" data-label="Entropia von Neumanna · Holografia">
+    $$S = -\mathrm{Tr}(\rho\ln\rho) \qquad S_{\max} = \frac{A}{4\,l_P^2}$$
+    <span class="fcomment">$S = 0$ dla czystych stanów kwantowych (pełna informacja o stanie). $S > 0$ dla stanów mieszanych (informacja zakodowana w splątaniu z otoczeniem). $S_{\max}$ — maksymalna pojemność informacyjna obszaru proporcjonalna do powierzchni $A$ granicy, nie objętości. Masa-energia wyznacza tę granicę przez krzywienie metryki.</span>
+  </div>
+
+  <div class="vis-section">
+    <div class="vis-header"><div class="vis-dot"></div>Materia jako nośnik informacji · Masah-capacity</div>
+    <div class="vis-tabs">
+      <button class="vis-tab on" data-panel="infoFlow">Przepływ informacji</button>
+      <button class="vis-tab" data-panel="masahCap">Masah-capacity $M_c$</button>
+      <button class="vis-tab" data-panel="bookMatter">Materia jako księga</button>
+    </div>
+    <div class="vis-body">
+      <div class="vis-panel on" id="infoFlow">
+        <canvas class="vis-canvas" id="infoCanvas" height="360"></canvas>
+        <div class="vis-controls">
+          <div class="vc"><span class="vc-lbl">Masa systemu</span><input type="range" id="ifMass" min="10" max="100" value="60"><span class="vc-val" id="ifMassV">60</span></div>
+          <div class="vc"><span class="vc-lbl">Splątanie $I(\psi:E)$</span><input type="range" id="ifEnt" min="5" max="100" value="45"><span class="vc-val" id="ifEntV">45%</span></div>
+        </div>
+        <div class="vis-desc">Przepływ informacji przez układ masowy. Układ pochłania informację o oddziaływaniach (strzałki wejściowe), koduje ją w swoim stanie mikroskopowym (gęstość węzłów), i emituje korelacje z otoczeniem (strzałki wyjściowe). <em>Masa wyznacza pojemność tego kodowania</em> — większa masa, bogatsza sieć relacyjna, wyższa masah-capacity.</div>
+      </div>
+      <div class="vis-panel" id="masahCap">
+        <canvas class="vis-canvas" id="masahCanvas" height="360"></canvas>
+        <div class="vis-controls">
+          <div class="vc"><span class="vc-lbl">$||\psi||^2$ (norma)</span><input type="range" id="mcNorm" min="5" max="100" value="70"><span class="vc-val" id="mcNormV">0.70</span></div>
+          <div class="vc"><span class="vc-lbl">$I(\psi:E)$ (korelacja)</span><input type="range" id="mcCorr" min="5" max="100" value="55"><span class="vc-val" id="mcCorrV">0.55</span></div>
+        </div>
+        <div class="vis-desc">Masah-capacity $M_c(\psi) = ||\psi||^2 \cdot I(\psi:E)$ jako miara relacyjnego bogactwa układu. $||\psi||^2$ — intensywność istnienia (norma stanu). $I(\psi:E)$ — informacja wzajemna z otoczeniem. Iloraz tych wielkości wyznacza zdolność układu do pełnienia roli nośnika historii i matrycy przyszłości. <em>Wysoka masa przy silnym splątaniu z otoczeniem = wysoka masah-capacity.</em></div>
+      </div>
+      <div class="vis-panel" id="bookMatter">
+        <canvas class="vis-canvas" id="bookCanvas" height="360"></canvas>
+        <div class="vis-desc">Metafora materii jako księgi: atrament = przemiana relacyjna (masa jako koszt pozycjonowania), stronice = stany mikroskopowe, tekst = zakumulowana historia relacyjna. Każda linia świata jest kolejną linijką tekstu. Nie istnieje zewnętrzny metaobserwator — każdy obserwator jest sam nośnikiem własnego zapisu i własnego czasu własnego.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="discovery">
+    <span class="disc-title">Masah-capacity — formalna definicja TERJ</span>
+    <div class="disc-body">
+      <p>TERJ wprowadza pojęcie <em>masah-capacity</em> $M_c$ nawiązujące etymologicznie do hebrajskiego מָשַׁח (masach) — namaszczenie, czynność konstytuująca nową relację i nadająca podmiotowi nową tożsamość relacyjną. Formalnie:</p>
+      <div class="disc-formula">$M_c(\psi) = ||\psi||^2 \cdot I(\psi : E)$<br>gdzie $||\psi||^2$ — norma stanu kwantowego, $I(\psi:E)$ — informacja wzajemna z otoczeniem $E$<br>Masah-capacity = intensywność istnienia × siła powiązania informacyjnego z kontekstem</div>
+      <p style="margin-top:0.8rem;">Układ o dużej masie (dużym koszcie lokalizacji) i silnym splątaniu z otoczeniem ma wysoką $M_c$ — jest zdolny do bogatych relacji emergentnych i do pełnienia roli matrycy informacyjnej. Masa, czas własny i informacja zbiegają się w jednym pojęciu.</p>
+    </div>
+  </div>
+
+  <div class="fn-section">
+    <span class="fn-label">Źródła — §4</span>
+    <div class="fn-item"><span class="fn-n">⁷</span><span class="fn-text">Bekenstein, J.D. (1973): Black holes and entropy. <em>Physical Review D</em> 7(8), 2333–2346. Entropia powierzchniowa i zasada holograficzna.</span></div>
+    <div class="fn-item"><span class="fn-n">⁸</span><span class="fn-text">Hawking, S.W. (1975): Particle creation by black holes. <em>Communications in Mathematical Physics</em> 43, 199–220.</span></div>
+    <div class="fn-item"><span class="fn-n">⁹</span><span class="fn-text">Shannon, C.E. (1948): A Mathematical Theory of Communication. <em>Bell System Technical Journal</em> 27. Entropia informacyjna i jej zbieżność z entropią termodynamiczną.</span></div>
+  </div>
+</section>
+
+<div class="div-rune"><span>◈</span></div>
+
+<!-- ══ ROZDZIAŁ: SYNTEZA TERJ ══ -->
+<section class="chapter" id="terj">
+  <div class="ch-meta">
+    <span class="ch-num">§ 5 · SYNTEZA TERJ</span>
+    <span class="ch-tag">TWIERDZENIE CENTRALNE · TRÓJKĄT m–τ–I · PERSPEKTYWY</span>
+  </div>
+  <h2 class="ch-title">Twierdzenie centralne i implikacje</h2>
+  <p class="ch-sub">Masa · czas własny · informacja — jeden trójkąt ontologiczny · Pytania otwarte</p>
+
+  <p class="lead">Przez cztery sekcje budowaliśmy jeden trójkąt: masa jako koszt lokalizacji, czas własny jako historia tego kosztu, informacja jako treść tej historii. Czas sformułować twierdzenie centralne.</p>
+
+  <div class="postulate">
+    <span class="postulate-label">Twierdzenie centralne — §XX TERJ</span>
+    <div style="font-size:0.95rem;color:#e8f0ff;line-height:2.1;margin-bottom:1rem;">$$m_c = y_f \cdot v \qquad \tau = \oint \sqrt{g_{\mu\nu}\,dx^\mu dx^\nu} \qquad M_c = ||\psi||^2 \cdot I(\psi:E)$$</div>
+    <p class="postulate-text">Masa jest emergentną miarą kosztu lokalizacji danej konfiguracji pola w przestrzeni relacyjnej: wyłania się ze sprzężenia pola z kondensatem próżniowym i jest proporcjonalna do siły tej relacji. Czas własny jest lokalnym, niepowtarzalnym zapisem historii relacyjnej danej masy — geometryczną sumą kosztów wszystkich jej przemian pozycjonowania. Materia, jako konfiguracja pól o określonej masie i czasie własnym, jest nośnikiem zakumulowanej informacji relacyjnej (rezyduum przeszłości) oraz matrycą probabilistyczną stanów przyszłych. Masah-capacity $M_c$ stanowi formalną miarę relacyjnego bogactwa układu — jego zdolności do bycia podmiotem i przedmiotem relacji emergentnych.</p>
+  </div>
+
+  <div class="vis-section">
+    <div class="vis-header"><div class="vis-dot"></div>Synteza · Trójkąt masa–czas–informacja</div>
+    <div class="vis-panel on" style="display:block;">
+      <canvas class="vis-canvas" id="synthTriangle" height="400"></canvas>
+      <div class="vis-desc">Trójkąt ontologiczny TERJ: masa (m, koszt lokalizacji) — czas własny (τ, historia tego kosztu) — informacja (I, treść historii). Każdy wierzchołek definiuje się przez dwa pozostałe. Strzałki dwukierunkowe = wzajemne warunkowanie. Brak uprzywilejowanego wierzchołka — relacja jest pierwotna wobec substancji.</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Trzy twierdzenia pochodne</div>
+
+  <div class="theorem-list">
+    <div class="theorem">
+      <span class="theorem-n">T1 — RELACYJNA PIERWOTNOŚĆ MASY</span>
+      <span class="theorem-body"><strong>Masa nie jest własnością wrodzoną cząstki — jest własnością relacji.</strong> Formalnie: $m_f = y_f \cdot v/\sqrt{2}$ gdzie $v$ jest wartością oczekiwaną pola Higgsa w próżni. Bez kondensatu: $m = 0$. Masa istnieje tylko w relacji pola z próżnią — i jest miarą siły tej relacji. Wspiera to lemat Yonedy (obiekt jest opisany przez morfizmy) i sieć spinowa LQG (przestrzeń wyłania się z relacji, nie poprzedza ich).</span>
+    </div>
+    <div class="theorem">
+      <span class="theorem-n">T2 — CZAS WŁASNY JAKO RELACYJNY AUTOBIOGRAM</span>
+      <span class="theorem-body"><strong>Czas własny $\tau$ każdej masy jest jej niepowtarzalnym zapisem historii relacyjnej.</strong> $d\tau = \sqrt{g_{\mu\nu}dx^\mu dx^\nu}$ zależy wyłącznie od historii trajektorii danej masy w polu grawitacyjnym wytworzonym przez inne masy. Masa mierzy czas i tworzy warunki jego mierzenia jednocześnie — nie istnieje pozycja zewnętrzna. Czas bliźniąt Langevina: $\Delta\tau$ jest obiektywną miarą różnicy historii relacyjnych, nie złudzeniem.</span>
+    </div>
+    <div class="theorem">
+      <span class="theorem-n">T3 — PODWÓJNY STATUS ONTOLOGICZNY MATERII</span>
+      <span class="theorem-body"><strong>Materia jest równocześnie rezyduum przeszłości i matrycą przyszłości.</strong> Stan mikroskopowy układu jest deterministyczną (lub probabilistyczną) funkcją wszystkich uprzednich oddziaływań relacyjnych — zakumulowaną historią. Równocześnie, operator ewolucji $U(t) = e^{-iHt/\hbar}$ aplikowany do tego stanu wyznacza amplitudy prawdopodobieństwa dla stanów przyszłych. Metafora hebrajska: materia jako <em>sefer</em> (księga), czas jako atrament zapisu, masa jako koszt utrzymania tekstu.</span>
+    </div>
+  </div>
+
+  <div class="sec-title">Pytania otwarte</div>
+
+  <p>Rozdział pozostawia trzy pytania wyznaczające kierunki dalszego rozwoju TERJ. <strong style="color:var(--amber)">Pierwsze:</strong> czy masah-capacity $M_c$ daje się zdefiniować dla układów makroskopowych w sposób obliczalny i fizycznie testowalny? Czy formalny związek między $M_c$ a zintegrowaną informacją $\Phi$ (IIT Tononi) jest precyzyjnie sformułowalny? <strong style="color:var(--amber)">Drugie:</strong> jeśli masa jest kosztem lokalizacji, to w jaki sposób układ "wybiera" trajektorię w przestrzeni stanów? Czy dekoherencja jest wystarczającym opisem wyłaniania się klasyczności, czy wymaga uzupełnienia o strukturę relacyjną środowiska? <strong style="color:var(--amber)">Trzecie:</strong> jaki jest dokładny związek między masah-capacity a świadomością jako kryształem czasu temporalnym?</p>
+
+  <div class="pull-dark"><p>Masa jest atramentem. Czas jest kolejnością linijek. Materia jest samą księgą: bytem, który jednocześnie zapisuje swoją historię i jest przez tę historię konstytuowany.</p></div>
+
+  <!-- Source links section -->
+  <div class="sec-title">Powiązane prace TERJ</div>
+
+  <div class="ext-grid">
+    <a class="ext-card" href="https://pawcio99.github.io/TEREJ_IX/" target="_blank" rel="noopener">
+      <span class="ext-lbl">Praca macierzysta · 2026</span>
+      <span class="ext-title">TEREJ IX — pełny tekst</span>
+      <span class="ext-desc">Wszystkie rozdziały z aparatem matematycznym, bibliografią i wizualizacjami interaktywnymi.</span>
+    </a>
+    <a class="ext-card" href="https://pawcio99.github.io/YHWH-_Entropia/" target="_blank" rel="noopener">
+      <span class="ext-lbl">Working Paper</span>
+      <span class="ext-title">YHWH i Entropia</span>
+      <span class="ext-desc">YHWH jako operator $dS/dt$ — wyprowadzenie z aparatem matematycznym i semantyką hebrajską.</span>
+    </a>
+    <a class="ext-card" href="https://pawcio99.github.io/EDEN_ENTROPIA/" target="_blank" rel="noopener">
+      <span class="ext-lbl">Esej</span>
+      <span class="ext-title">Entropia i Ofiara</span>
+      <span class="ext-desc">Demon Maxwella jako Cherub. Termodynamika etyki. Dwa rodzaje ofiary jako dwa operatory gradientu.</span>
+    </a>
+    <a class="ext-card" href="https://pawcio99.github.io/SEMANTYKA_GRADIENTOW/" target="_blank" rel="noopener">
+      <span class="ext-lbl">Working Paper</span>
+      <span class="ext-title">Semantyka Gradientów</span>
+      <span class="ext-desc">Analiza lingwistyczna Rdz 1–3 jako formalizmu gradientu. Rdzeń hebrajski jako operator fizyczny.</span>
+    </a>
+    <a class="ext-card" href="https://pawcio99.github.io/Gradient_Entropia/" target="_blank" rel="noopener">
+      <span class="ext-lbl">Working Paper</span>
+      <span class="ext-title">Gradient i Entropia</span>
+      <span class="ext-desc">Struktury dysypatywne Prigogine'a. Zasada dysypacyjnej adaptacji Englanda. Wyspy Ĝ w oceanie Ĥ.</span>
+    </a>
+  </div>
+
+  <div class="part-nav">
+    <a href="https://pawcio99.github.io/TEREJ_IX/" target="_blank">← TEREJ IX · Fraktal i Kryształ Czasu</a>
+    <a href="#" class="current">Rozdział XX · Masa · Czas · Informacja</a>
+    <a href="https://pawcio99.github.io/YHWH-_Entropia/" target="_blank">YHWH i Entropia →</a>
+  </div>
+</section>
+
+<!-- ══ BIBLIOGRAFIA ══ -->
+<section class="chapter" id="bibliografia">
+  <div class="ch-meta">
+    <span class="ch-num">BIBLIOGRAFIA</span>
+    <span class="ch-tag">ŹRÓDŁA NAUKOWE · TERJ WORKING PAPERS</span>
+  </div>
+  <h2 class="ch-title">Literatura</h2>
+  <p class="ch-sub">Źródła fizyczne, filozoficzne i TERJ Working Papers</p>
+
+  <div class="bib">
+    <span class="bib-title">Fizyka teoretyczna i matematyka</span>
+    <div class="bib-item"><span class="bib-n">[1]</span><span class="bib-text">Bekenstein, J.D. (1973): Black holes and entropy. <em>Physical Review D</em> 7(8), 2333–2346.</span></div>
+    <div class="bib-item"><span class="bib-n">[2]</span><span class="bib-text">Englert, F., Brout, R. (1964): Broken Symmetry and the Mass of Gauge Vector Mesons. <em>Physical Review Letters</em> 13, 321–323.</span></div>
+    <div class="bib-item"><span class="bib-n">[3]</span><span class="bib-text">Hawking, S.W. (1975): Particle creation by black holes. <em>Communications in Mathematical Physics</em> 43, 199–220.</span></div>
+    <div class="bib-item"><span class="bib-n">[4]</span><span class="bib-text">Higgs, P.W. (1964): Broken Symmetries and the Masses of Gauge Bosons. <em>Physical Review Letters</em> 13, 508–509. Nobel 2013.</span></div>
+    <div class="bib-item"><span class="bib-n">[5]</span><span class="bib-text">Landauer, R. (1961): Irreversibility and heat generation in the computing process. <em>IBM Journal of Research and Development</em> 5(3), 183–191.</span></div>
+    <div class="bib-item"><span class="bib-n">[6]</span><span class="bib-text">Mac Lane, S. (1971): <em>Categories for the Working Mathematician</em>. Springer. Lemat Yonedy i relacyjność pierwotna obiektów.</span></div>
+    <div class="bib-item"><span class="bib-n">[7]</span><span class="bib-text">Prigogine, I., Stengers, I. (1984): <em>Order Out of Chaos</em>. Bantam Books. Struktury dysypatywne i strzałka czasu. Nobel z chemii 1977.</span></div>
+    <div class="bib-item"><span class="bib-n">[8]</span><span class="bib-text">Rovelli, C. (1996): Relational Quantum Mechanics. <em>Int. J. Theor. Phys.</em> 35, 1637–1678.</span></div>
+    <div class="bib-item"><span class="bib-n">[9]</span><span class="bib-text">Shannon, C.E. (1948): A Mathematical Theory of Communication. <em>Bell System Technical Journal</em> 27.</span></div>
+    <div class="bib-item"><span class="bib-n">[10]</span><span class="bib-text">Susskind, L. (1995): The world as a hologram. <em>Journal of Mathematical Physics</em> 36(11), 6377–6396.</span></div>
+    <div class="bib-item"><span class="bib-n">[11]</span><span class="bib-text">Tononi, G. (2008): Consciousness as Integrated Information. <em>Biological Bulletin</em> 215. IIT: $\Phi$ jako miara splątania relacyjnego.</span></div>
+    <div class="bib-item"><span class="bib-n">[12]</span><span class="bib-text">Weinberg, S. (1995): <em>The Quantum Theory of Fields, Vol. I</em>. Cambridge University Press.</span></div>
+    <div class="bib-item"><span class="bib-n">[13]</span><span class="bib-text">Whitehead, A.N. (1929): <em>Process and Reality</em>. Cambridge University Press. Metafizyka procesu i relacyjna pierwotność zdarzeń.</span></div>
+  </div>
+
+  <div class="bib" style="margin-top:2rem;">
+    <span class="bib-title">TERJ Working Papers · Paweł Majsterek · 2026</span>
+    <div class="bib-item"><span class="bib-n">[T1]</span><span class="bib-text">Majsterek, P. (2026): <em>TEREJ IX — Fraktal, Kryształ Czasu i Niezmienniczość Skalowania Ĝ</em>. pawcio99.github.io/TEREJ_IX/. CC BY 4.0.</span></div>
+    <div class="bib-item"><span class="bib-n">[T2]</span><span class="bib-text">Majsterek, P. (2026): <em>YHWH i Entropia — dS/dt jako operator relacji</em>. pawcio99.github.io/YHWH-_Entropia/. CC BY 4.0.</span></div>
+    <div class="bib-item"><span class="bib-n">[T3]</span><span class="bib-text">Majsterek, P. (2026): <em>Entropia i Ofiara — Demon Maxwella jako Cherub</em>. pawcio99.github.io/EDEN_ENTROPIA/. CC BY 4.0.</span></div>
+    <div class="bib-item"><span class="bib-n">[T4]</span><span class="bib-text">Majsterek, P. (2026): <em>Semantyka Gradientów — rdzeń hebrajski jako formalizm fizyczny</em>. pawcio99.github.io/SEMANTYKA_GRADIENTOW/. CC BY 4.0.</span></div>
+    <div class="bib-item"><span class="bib-n">[T5]</span><span class="bib-text">Majsterek, P. (2026): <em>Gradient i Entropia — struktury dysypatywne i zasada Englanda</em>. pawcio99.github.io/Gradient_Entropia/. CC BY 4.0.</span></div>
+    <div class="bib-item"><span class="bib-n">[T6]</span><span class="bib-text">Majsterek, P. (2026): <em>TEREJ — Komentarz Naukowy Części I–IV</em>. Wydanie zintegrowane z aparatem matematycznym i wizualizacjami. CC BY 4.0.</span></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-author">
+      <div class="footer-avatar">PM</div>
+      <div class="footer-meta">
+        <span class="footer-role">Autor</span>
+        <span class="footer-name">Paweł Majsterek</span>
+        <span class="footer-series">TERJ · TEREJ IX · Rozdział XX · Maj 2026</span>
+        <p class="footer-bio">Teoria Emergentnych Relacji Jako — masa jako koszt lokalizacji, czas lokalny i informacja jako matryce relacyjne. Rozdział XX komentarza naukowego do TERJ.</p>
+      </div>
+    </div>
+    <div class="license-block">
+      <div class="license-badge">CC BY 4.0</div>
+      <div>
+        <div style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.18em;color:var(--amber);margin-bottom:0.5rem;text-transform:uppercase;">Creative Commons Attribution 4.0 International</div>
+        <p class="license-text">Tekst udostępniany na licencji otwartej <strong style="color:rgba(255,180,60,0.8);">CC BY 4.0</strong>. Można kopiować, rozpowszechniać i remiksować — pod warunkiem podania informacji o autorze.</p>
+        <div class="cite-block">Majsterek, P. (2026). <em>Masa jako koszt lokalizacji: czas lokalny, materia i informacja jako matryce relacyjne.</em> TEREJ — Rozdział XX. Licencja CC BY 4.0.</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-ver">Wersja 1.0 · Wydanie pierwsze</span>
+      <span class="footer-date">Maj 2026</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+const TAU = Math.PI * 2;
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+const lerp  = (a,b,t) => a+(b-a)*t;
+const G = id => document.getElementById(id);
+
+/* ── Progress bar ── */
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const bar = G('progress');
+  if(bar) bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+}, {passive:true});
+
+/* ── Scroll reveal ── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.05});
+document.querySelectorAll('.chapter').forEach(c => revealObs.observe(c));
+
+/* ── Nav active ── */
+['wstep','masa','czas','informacja','terj','bibliografia'].forEach(id => {
+  const el = G(id); if(!el) return;
+  new IntersectionObserver(([e]) => {
+    if(e.isIntersecting) {
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      const a = document.querySelector(`nav a[href="#${id}"]`);
+      if(a) a.classList.add('active');
+    }
+  }, {threshold:0.3}).observe(el);
+});
+
+/* ── Vis tabs ── */
+document.querySelectorAll('.vis-tabs').forEach(tabs => {
+  tabs.querySelectorAll('.vis-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const c = btn.closest('.vis-section');
+      c.querySelectorAll('.vis-tab').forEach(b => b.classList.remove('on'));
+      c.querySelectorAll('.vis-panel').forEach(p => p.classList.remove('on'));
+      btn.classList.add('on');
+      const panel = c.querySelector('#' + btn.dataset.panel);
+      if(panel) panel.classList.add('on');
+    });
+  });
+});
+
+/* ── Lazy canvas init ── */
+function lazyCanvas(cv, startFn) {
+  if(!cv) return;
+  const io = new IntersectionObserver(([entry]) => {
+    if(entry.isIntersecting) {
+      if(cv.offsetWidth > 0) cv.width = cv.offsetWidth;
+      startFn();
+      io.disconnect();
+    }
+  }, {threshold:0.05, rootMargin:'200px'});
+  io.observe(cv);
+}
+
+/* roundRect polyfill */
+if(!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r) {
+    r = Math.min(r, w/2, h/2);
+    this.beginPath();
+    this.moveTo(x+r,y);
+    this.lineTo(x+w-r,y); this.arcTo(x+w,y,x+w,y+r,r);
+    this.lineTo(x+w,y+h-r); this.arcTo(x+w,y+h,x+w-r,y+h,r);
+    this.lineTo(x+r,y+h); this.arcTo(x,y+h,x,y+h-r,r);
+    this.lineTo(x,y+r); this.arcTo(x,y,x+r,y,r);
+    this.closePath();
+  };
+}
+
+/* ═══ COSMOS ═══ */
+(function() {
+  const cv = G('cosmos'); if(!cv) return;
+  const cx = cv.getContext('2d');
+  let W, H, pts = [];
+  function resize() { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
+  function init() {
+    pts = Array.from({length:180}, () => ({
+      x: Math.random()*W, y: Math.random()*H,
+      r: Math.random()*1.2+0.2, a: Math.random(),
+      da: (Math.random()-0.5)*0.005,
+      vx: (Math.random()-0.5)*0.016, vy: (Math.random()-0.5)*0.016,
+      h: Math.random()>0.7 ? 185 : (Math.random()>0.5 ? 42 : 220)
+    }));
+  }
+  function draw() {
+    cx.clearRect(0,0,W,H);
+    [[0.2,0.3,185,0.07],[0.7,0.65,42,0.055],[0.5,0.8,280,0.04]].forEach(([rx,ry,h,a]) => {
+      const g = cx.createRadialGradient(rx*W,ry*H,0,rx*W,ry*H,Math.min(W,H)*0.44);
+      g.addColorStop(0,`hsla(${h},70%,40%,${a})`);
+      g.addColorStop(1,'rgba(0,0,0,0)');
+      cx.fillStyle = g; cx.fillRect(0,0,W,H);
+    });
+    pts.forEach(p => {
+      p.a += p.da;
+      if(p.a<=0||p.a>=1) p.da *= -1;
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0) p.x=W; if(p.x>W) p.x=0;
+      if(p.y<0) p.y=H; if(p.y>H) p.y=0;
+      cx.beginPath(); cx.arc(p.x,p.y,p.r,0,TAU);
+      cx.fillStyle = `hsla(${p.h},80%,75%,${p.a*0.7})`; cx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', () => { resize(); init(); });
+  resize(); init(); draw();
+})();
+
+/* ═══ HERO CANVAS — Higgs field ═══ */
+(function() {
+  const cv = G('heroCanvas'); if(!cv) return;
+  const cx = cv.getContext('2d');
+  let W, H, t = 0;
+  function resize() {
+    W = cv.width = cv.offsetWidth || window.innerWidth;
+    H = cv.height = cv.offsetHeight || window.innerHeight;
+  }
+  function draw() {
+    cx.clearRect(0,0,W,H);
+    const gx = 22, gy = 14;
+    for(let i=0; i<gx; i++) {
+      for(let j=0; j<gy; j++) {
+        const x = (i/(gx-1))*W, y = (j/(gy-1))*H;
+        const nx = (x/W-0.5)*2, ny = (y/H-0.5)*2;
+        const r = Math.sqrt(nx*nx+ny*ny);
+        const phi = Math.atan2(ny,nx);
+        // Higgs potential topology
+        const V = -0.5*r*r + 0.25*r*r*r*r + 0.12*Math.sin(phi*2+t*0.7);
+        const a = 0.025 + 0.07*Math.exp(-V*2.5 - r*2.2);
+        const hue = 185 + V*45;
+        cx.beginPath(); cx.arc(x,y,1.5+2*a*18,0,TAU);
+        cx.fillStyle = `hsla(${hue},70%,60%,${a})`; cx.fill();
+      }
+    }
+    t += 0.011;
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+/* ═══ PROPAGATOR VISUALIZATION ═══ */
+(function() {
+  const cv = G('propCanvas'); if(!cv) return;
+  cv.width = cv.offsetWidth||800; cv.height = 340;
+  const cx = cv.getContext('2d');
+  let t = 0;
+
+  function draw() {
+    const W = cv.width, H = cv.height;
+    cx.clearRect(0,0,W,H);
+    cx.fillStyle = '#06101e'; cx.fillRect(0,0,W,H);
+
+    const m = G('pMass').value/100;
+    const eps = G('pEps').value/100;
+    G('pMassV').textContent = (m*100).toFixed(0) + ' GeV';
+    G('pEpsV').textContent = (eps*100).toFixed(0);
+
+    const cx0 = W/2, cy0 = H/2;
+    const scale = Math.min(W,H)*0.38;
+
+    // Grid lines
+    cx.strokeStyle = 'rgba(46,232,200,0.07)'; cx.lineWidth = 0.5;
+    for(let i=-4;i<=4;i++) {
+      cx.beginPath(); cx.moveTo(cx0+i*scale/4, 10); cx.lineTo(cx0+i*scale/4, H-10); cx.stroke();
+      cx.beginPath(); cx.moveTo(10, cy0+i*scale/4); cx.lineTo(W-10, cy0+i*scale/4); cx.stroke();
+    }
+
+    // Propagator amplitude |G(p)|² as heatmap
+    const imgData = cx.createImageData(W, H);
+    for(let py=0; py<H; py++) {
+      for(let px=0; px<W; px++) {
+        const pr = (px-cx0)/scale;
+        const pi2 = (py-cy0)/scale;
+        const p2 = pr*pr + pi2*pi2;
+        const denom = (p2-m*m)*(p2-m*m) + eps*eps;
+        const amp = Math.min(1, 0.08/denom);
+        const hue = 185 + amp*80;
+        const [r,g,b] = hslToRgb(hue/360, 0.75, 0.15+amp*0.55);
+        const idx = (py*W+px)*4;
+        imgData.data[idx] = r; imgData.data[idx+1] = g;
+        imgData.data[idx+2] = b; imgData.data[idx+3] = Math.round(amp*255*2);
+      }
+    }
+    cx.putImageData(imgData, 0, 0);
+
+    // Mass shell circle p² = m²
+    cx.beginPath();
+    cx.arc(cx0, cy0, m*scale, 0, TAU);
+    cx.strokeStyle = 'rgba(255,180,60,0.85)'; cx.lineWidth = 2.5; cx.stroke();
+
+    // Light cone p² = 0 (center point)
+    cx.beginPath(); cx.arc(cx0, cy0, 5, 0, TAU);
+    cx.fillStyle = 'rgba(255,220,80,0.9)'; cx.fill();
+
+    // Labels
+    cx.font = "10px 'Space Mono',monospace"; cx.textAlign = 'center';
+    cx.fillStyle = 'rgba(255,180,60,0.8)';
+    cx.fillText(`Biegun propagatora p²=m² · m=${(m*100).toFixed(0)} GeV (bursztynowy okrąg)`, W/2, 20);
+    cx.fillStyle = 'rgba(255,220,80,0.6)';
+    cx.fillText('⊙ foton: biegun w p²=0 (stożek świetlny)', W/2, H-12);
+    cx.fillStyle = 'rgba(46,232,200,0.5)';
+    cx.fillText(`Re(p)`, W-30, cy0-8); cx.fillText(`Im(p)`, cx0+12, 18);
+
+    t += 0.02;
+    requestAnimationFrame(draw);
+  }
+  G('pMass').oninput = () => G('pMassV').textContent = G('pMass').value + ' GeV';
+  G('pEps').oninput  = () => G('pEpsV').textContent = G('pEps').value;
+  lazyCanvas(cv, draw);
+})();
+
+/* ═══ HIGGS 3D V2 ═══ */
+(function() {
+  const cv = G('higgsV2'); if(!cv) return;
+  cv.width = cv.offsetWidth||800; cv.height = 340;
+  const cx = cv.getContext('2d');
+  let autoRot = 25, t = 0;
+
+  function V(x, y, mu2, lam) {
+    const r2 = x*x + y*y;
+    return -mu2/50*r2 + lam/500*r2*r2;
+  }
+  function proj(x, y, z, rot) {
+    const cosR = Math.cos(rot), sinR = Math.sin(rot);
+    const px = x*cosR - y*sinR, py2 = x*sinR + y*cosR;
+    const tilt = 0.5;
+    const pz = z*Math.cos(tilt) - py2*Math.sin(tilt);
+    const W = cv.width, H = cv.height;
+    return { sx: W/2+px*120, sy: H/2+pz*80+py2*Math.sin(tilt)*60, depth: py2+pz };
+  }
+
+  function draw() {
+    const W = cv.width, H = cv.height;
+    const mu2 = G('hMu2').value;
+    const rot = autoRot * Math.PI/180;
+    G('hMu2V').textContent = mu2;
+    G('hRot2V').textContent = Math.round(autoRot%360) + '°';
+    cx.clearRect(0,0,W,H);
+    cx.fillStyle = '#07101e'; cx.fillRect(0,0,W,H);
+
+    const N=26, pts=[];
+    for(let i=0;i<=N;i++) for(let j=0;j<=N;j++) {
+      const x=(i/N-0.5)*4, y=(j/N-0.5)*4;
+      const z = V(x,y,mu2,25);
+      const {sx,sy,depth} = proj(x,z*5,y,rot);
+      pts.push({i,j,x,y,z,sx,sy,depth});
+    }
+    const cells=[];
+    for(let i=0;i<N;i++) for(let j=0;j<N;j++) {
+      const p00=pts[i*(N+1)+j], p10=pts[(i+1)*(N+1)+j];
+      const p11=pts[(i+1)*(N+1)+j+1], p01=pts[i*(N+1)+j+1];
+      cells.push({p00,p10,p11,p01,avg:(p00.depth+p10.depth+p11.depth+p01.depth)/4,avgZ:(p00.z+p10.z+p11.z+p01.z)/4});
+    }
+    cells.sort((a,b)=>b.avg-a.avg);
+
+    const vMin = V(0,0,mu2,25);
+    const vMax = Math.max(V(2,0,mu2,25),V(0,2,mu2,25));
+    cells.forEach(({p00,p10,p11,p01,avgZ}) => {
+      const f = clamp((avgZ-vMin)/(vMax-vMin+0.001),0,1);
+      let r,g,b;
+      if(f<0.35) { r=lerp(20,200,f/0.35); g=lerp(110,210,f/0.35); b=lerp(140,70,f/0.35); }
+      else if(f<0.7) { const t2=(f-0.35)/0.35; r=lerp(200,255,t2); g=lerp(210,160,t2); b=lerp(70,40,t2); }
+      else { r=255; g=lerp(160,50,((f-0.7)/0.3)); b=40; }
+      cx.beginPath();
+      cx.moveTo(p00.sx,p00.sy); cx.lineTo(p10.sx,p10.sy);
+      cx.lineTo(p11.sx,p11.sy); cx.lineTo(p01.sx,p01.sy);
+      cx.closePath();
+      cx.fillStyle=`rgba(${~~r},${~~g},${~~b},0.83)`; cx.fill();
+      cx.strokeStyle=`rgba(${~~r},${~~g},${~~b},0.15)`; cx.lineWidth=0.4; cx.stroke();
+    });
+
+    // Min ring
+    if(mu2>5) {
+      const ringR = Math.sqrt(mu2/50/(25/500));
+      const rPts=[];
+      for(let a=0;a<=64;a++) {
+        const angle=a/64*TAU;
+        const x=ringR*Math.cos(angle), y=ringR*Math.sin(angle);
+        const z=V(x,y,mu2,25);
+        const {sx,sy}=proj(x,z*5,y,rot);
+        rPts.push({sx,sy});
+      }
+      cx.beginPath();
+      rPts.forEach((p,i)=>i===0?cx.moveTo(p.sx,p.sy):cx.lineTo(p.sx,p.sy));
+      cx.strokeStyle='rgba(255,180,60,0.9)'; cx.lineWidth=2.5; cx.stroke();
+    }
+
+    cx.font="10px 'Space Mono',monospace"; cx.textAlign='center';
+    cx.fillStyle='rgba(255,180,60,0.8)';
+    cx.fillText(mu2<10?'μ²≈0: symetria zachowana, jedno minimum, kairos':`μ²=${mu2}: minimum kapeluszowe v=${(Math.sqrt(mu2/50/(25/500))).toFixed(2)} · złamanie symetrii · masa`, W/2, 20);
+
+    autoRot += 0.12;
+    requestAnimationFrame(draw);
+  }
+  G('hMu2').oninput=()=>{}; G('hRot2').oninput=()=>{};
+  lazyCanvas(cv, draw);
+})();
+
+/* ═══ MASS EMERGENCE ═══ */
+(function() {
+  const cv = G('massCanvas'); if(!cv) return;
+  cv.width = cv.offsetWidth||800; cv.height = 340;
+  const cx = cv.getContext('2d');
+  const fermions = [
+    {name:'e',lbl:'Elektron',y:0.0028,m:0.511},
+    {name:'μ',lbl:'Mion',y:0.059,m:105.7},
+    {name:'u',lbl:'Kwark u',y:0.014,m:2.3},
+    {name:'d',lbl:'Kwark d',y:0.016,m:4.8},
+    {name:'s',lbl:'Kwark s',y:0.22,m:95},
+    {name:'c',lbl:'Kwark c',y:0.72,m:1275},
+    {name:'b',lbl:'Kwark b',y:0.99,m:4180},
+    {name:'t',lbl:'Top',y:1.0,m:173100}
+  ];
+  const v = 246000; // MeV
+
+  function draw() {
+    const W = cv.width, H = cv.height;
+    const yf = G('yukawa').value / 100;
+    G('yukawaV').textContent = yf.toFixed(2);
+    cx.clearRect(0,0,W,H); cx.fillStyle='#06101e'; cx.fillRect(0,0,W,H);
+
+    const pad={l:60,r:30,t:30,b:50};
+    const pw=W-pad.l-pad.r, ph=H-pad.t-pad.b;
+
+    // Axes
+    cx.strokeStyle='rgba(255,180,60,0.25)'; cx.lineWidth=1;
+    cx.beginPath(); cx.moveTo(pad.l,pad.t); cx.lineTo(pad.l,pad.t+ph); cx.lineTo(pad.l+pw,pad.t+ph); cx.stroke();
+
+    // Mass vs yukawa curve
+    cx.beginPath();
+    for(let i=0;i<=200;i++) {
+      const yy=i/200, m=yy*v/Math.sqrt(2);
+      const x=pad.l+i*pw/200, y=pad.t+ph*(1-Math.log10(m+1)/Math.log10(v*2));
+      i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+    }
+    cx.strokeStyle='rgba(255,180,60,0.6)'; cx.lineWidth=2; cx.stroke();
+
+    // Fermion markers
+    fermions.forEach(f => {
+      const sx = pad.l + f.y*pw;
+      const sy = pad.t + ph*(1-Math.log10(f.m+1)/Math.log10(v*2));
+      const active = Math.abs(f.y - yf) < 0.08;
+      cx.beginPath(); cx.arc(sx,sy,active?8:5,0,TAU);
+      cx.fillStyle=active?'rgba(255,180,60,0.95)':'rgba(46,232,200,0.65)'; cx.fill();
+      cx.font=`${active?'bold ':''} 9px 'Space Mono',monospace`;
+      cx.textAlign='center'; cx.fillStyle=active?'rgba(255,180,60,1)':'rgba(46,232,200,0.7)';
+      cx.fillText(f.lbl,sx,sy-12);
+    });
+
+    // Current yf line
+    const curX = pad.l + yf*pw;
+    cx.beginPath(); cx.moveTo(curX,pad.t); cx.lineTo(curX,pad.t+ph);
+    cx.strokeStyle='rgba(255,180,60,0.4)'; cx.lineWidth=1; cx.setLineDash([4,5]); cx.stroke(); cx.setLineDash([]);
+
+    const mNow = yf*v/Math.sqrt(2);
+    cx.font="10px 'Space Mono',monospace"; cx.textAlign='center';
+    cx.fillStyle='rgba(255,180,60,0.8)';
+    cx.fillText(`y_f = ${yf.toFixed(2)} → m = ${mNow>1000?(mNow/1000).toFixed(1)+' GeV':mNow.toFixed(0)+' MeV'}`, W/2, 20);
+    cx.fillStyle='rgba(46,232,200,0.5)';
+    cx.fillText('stała Yukawy y_f →',W/2,H-12);
+    cx.save(); cx.translate(20,pad.t+ph/2); cx.rotate(-Math.PI/2);
+    cx.fillText('masa m (log)',0,0); cx.restore();
+  }
+  G('yukawa').oninput=draw;
+  lazyCanvas(cv, draw);
+})();
+
+/* ═══ PROPER TIME ═══ */
+(function() {
+  const cv = G('ptCanvas'); if(!cv) return;
+  cv.width=cv.offsetWidth||800; cv.height=360;
+  const cx=cv.getContext('2d');
+  let t=0;
+
+  function draw() {
+    const W=cv.width, H=cv.height;
+    const m=G('ptMass').value/100, beta=G('ptVel').value/100;
+    G('ptMassV').textContent=G('ptMass').value;
+    G('ptVelV').textContent=beta.toFixed(2);
+    cx.clearRect(0,0,W,H); cx.fillStyle='#06101e'; cx.fillRect(0,0,W,H);
+
+    const gamma=1/Math.sqrt(1-beta*beta);
+    const cx0=W/2, baseY=H-40;
+    const scale=H*0.72;
+
+    // Grid
+    cx.strokeStyle='rgba(46,232,200,0.06)'; cx.lineWidth=0.6;
+    for(let i=0;i<8;i++) { cx.beginPath(); cx.moveTo(pad(W,i,8),40); cx.lineTo(pad(W,i,8),H-40); cx.stroke(); }
+    function pad(W,i,n){return 40+i*(W-80)/n;}
+
+    // Axes labels
+    cx.font="9px 'Space Mono',monospace"; cx.textAlign='center';
+    cx.fillStyle='rgba(160,185,255,0.4)';
+    cx.fillText('czas koordynacyjny t →', W/2, H-12);
+    cx.save(); cx.translate(18,H/2); cx.rotate(-Math.PI/2);
+    cx.fillText('przestrzeń x', 0, 0); cx.restore();
+
+    const ph=H-90, speed=1.8;
+
+    // Static particle worldline (amber)
+    const sProgress=(t*speed*0.01)%1;
+    cx.beginPath();
+    cx.moveTo(W*0.2, H-50); cx.lineTo(W*0.2, H-50-ph*sProgress);
+    cx.strokeStyle='rgba(255,180,60,0.8)'; cx.lineWidth=2.5; cx.stroke();
+    // Clock tick marks
+    for(let i=0;i<=Math.floor(sProgress*8);i++) {
+      const ty=H-50-ph*i/8;
+      cx.beginPath(); cx.moveTo(W*0.2-8,ty); cx.lineTo(W*0.2+8,ty);
+      cx.strokeStyle='rgba(255,180,60,0.6)'; cx.lineWidth=1; cx.stroke();
+    }
+
+    // Moving particle worldline (teal)
+    const mProgress=(t*speed*0.01)%1;
+    const mTau=mProgress/gamma;
+    for(let i=0;i<=100;i++) {
+      const frac=i/100*mProgress;
+      const x=W*0.2+beta*frac*pw();
+      const y=H-50-ph*frac;
+      if(i===0){cx.beginPath();cx.moveTo(x,y);}else cx.lineTo(x,y);
+    }
+    cx.strokeStyle='rgba(46,232,200,0.8)'; cx.lineWidth=2.5; cx.stroke();
+    function pw(){return W*0.55;}
+    // Moving clock ticks (fewer due to time dilation)
+    for(let i=0;i<=Math.floor(mTau*8);i++) {
+      const frac=i/(8*mTau)*mTau*gamma;
+      const x=W*0.2+beta*frac*pw(), y=H-50-ph*frac;
+      cx.beginPath(); cx.moveTo(x-6,y-6); cx.lineTo(x+6,y+6);
+      cx.strokeStyle='rgba(46,232,200,0.55)'; cx.lineWidth=1; cx.stroke();
+    }
+
+    // Photon
+    const phX=W*0.5+mProgress*pw()*0.6;
+    const phY=H-50-ph*mProgress;
+    cx.beginPath(); cx.moveTo(W*0.5,H-50); cx.lineTo(phX,phY);
+    cx.strokeStyle='rgba(255,220,60,0.7)'; cx.lineWidth=1.8; cx.stroke();
+
+    // Labels
+    cx.font="10px 'Space Mono',monospace"; cx.textAlign='left';
+    cx.fillStyle='rgba(255,180,60,0.8)'; cx.fillText('Masa m (spoczynek) · τ pełne',W*0.22,60);
+    cx.fillStyle='rgba(46,232,200,0.8)'; cx.fillText(`v=${beta.toFixed(2)}c · τ=${(1/gamma).toFixed(3)}τ₀ (dylatacja)`,W*0.22+pw()*beta*0.5+10,70);
+    cx.fillStyle='rgba(255,220,60,0.6)'; cx.fillText('γ foton · dτ=0',W*0.5+pw()*0.3+10,H-80);
+    cx.textAlign='center';
+    cx.fillStyle='rgba(160,185,255,0.5)';
+    cx.fillText(`γ = ${gamma.toFixed(3)} · masa m=${G('ptMass').value} GeV`, W/2, H-28);
+
+    t+=0.5; requestAnimationFrame(draw);
+  }
+  G('ptMass').oninput=()=>G('ptMassV').textContent=G('ptMass').value;
+  G('ptVel').oninput=()=>G('ptVelV').textContent=(G('ptVel').value/100).toFixed(2);
+  lazyCanvas(cv, draw);
+})();
+
+/* ═══ TWIN PARADOX ═══ */
+(function() {
+  const cv=G('twinCanvas'); if(!cv) return;
+  cv.width=cv.offsetWidth||800; cv.height=360;
+  const cx=cv.getContext('2d');
+  let t=0;
+
+  function draw() {
+    const W=cv.width, H=cv.height;
+    const beta=G('twVel').value/100;
+    G('twVelV').textContent=beta.toFixed(2)+'c';
+    cx.clearRect(0,0,W,H); cx.fillStyle='#06101e'; cx.fillRect(0,0,W,H);
+    const gamma=1/Math.sqrt(1-beta*beta);
+    const dTau=1/gamma;
+
+    const ph=H*0.72, cx0=W/2;
+    const phase=(t*0.008)%2;
+    const progress=Math.min(phase, 1);
+
+    // Grid
+    for(let i=0;i<6;i++) {
+      cx.strokeStyle='rgba(46,232,200,0.05)'; cx.lineWidth=0.5;
+      cx.beginPath(); cx.moveTo(40+i*(W-80)/5,40); cx.lineTo(40+i*(W-80)/5,H-40); cx.stroke();
+    }
+
+    // Twin A: stationary
+    const aX=W*0.3;
+    cx.beginPath(); cx.moveTo(aX,H-40);
+    cx.lineTo(aX, H-40-ph*progress);
+    cx.strokeStyle='rgba(255,180,60,0.85)'; cx.lineWidth=3; cx.stroke();
+    // Age ticks A
+    const ticksA=Math.floor(progress*10);
+    for(let i=0;i<=ticksA;i++) { const ty=H-40-ph*i/10; cx.beginPath(); cx.moveTo(aX-10,ty); cx.lineTo(aX+10,ty); cx.strokeStyle='rgba(255,180,60,0.5)'; cx.lineWidth=1; cx.stroke(); }
+
+    // Twin B: out and back
+    let bX, bY;
+    if(progress<0.5) {
+      bX=W*0.3+beta*(progress*2)*W*0.28;
+      bY=H-40-ph*progress;
+    } else {
+      bX=W*0.3+beta*(1-(progress-0.5)*2)*W*0.28;
+      bY=H-40-ph*progress;
+    }
+    cx.beginPath();
+    for(let i=0;i<=200;i++) {
+      const p=i/200*progress;
+      const x=p<0.5?W*0.3+beta*(p*2)*W*0.28:W*0.3+beta*(1-(p-0.5)*2)*W*0.28;
+      const y=H-40-ph*p;
+      i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+    }
+    cx.strokeStyle='rgba(46,232,200,0.8)'; cx.lineWidth=2.5; cx.stroke();
+    // Age ticks B
+    const ticksB=Math.floor(progress*10*dTau);
+    for(let i=0;i<=ticksB;i++) {
+      const p2=i/(10*dTau);
+      const x2=p2<0.5?W*0.3+beta*(p2*2)*W*0.28:W*0.3+beta*(1-(p2-0.5)*2)*W*0.28;
+      const y2=H-40-ph*p2;
+      if(y2>40) {cx.beginPath();cx.arc(x2,y2,2,0,TAU);cx.fillStyle='rgba(46,232,200,0.5)';cx.fill();}
+    }
+
+    cx.font="10px 'Space Mono',monospace"; cx.textAlign='left';
+    cx.fillStyle='rgba(255,180,60,0.8)'; cx.fillText(`A (spoczynek): τ_A = ${(progress*10).toFixed(1)} lat`,W*0.32,60);
+    cx.fillStyle='rgba(46,232,200,0.8)'; cx.fillText(`B (v=${beta.toFixed(2)}c): τ_B = ${(progress*10*dTau).toFixed(1)} lat`,W*0.32,78);
+    cx.fillStyle='rgba(176,136,248,0.7)'; cx.fillText(`Δτ = ${(progress*10*(1-dTau)).toFixed(1)} lat · B jest młodszy`,W*0.32,96);
+    cx.textAlign='center';
+    cx.fillStyle='rgba(160,185,255,0.4)'; cx.fillText('γ='+gamma.toFixed(3)+'  1/γ='+dTau.toFixed(3),W/2,H-14);
+
+    t+=0.4; requestAnimationFrame(draw);
+  }
+  G('twVel').oninput=()=>G('twVelV').textContent=(G('twVel').value/100).toFixed(2)+'c';
+  lazyCanvas(cv, draw);
+})();
+
+/* ═══ ARROW OF TIME ═══ */
+(function() {
+  const cv=G('arrowCanvas'); if(!cv) return;
+  cv.width=cv.offsetWidth||800; cv.height=360;
+  const cx=cv.getContext('2d');
+  let t=0, bits=[];
+  for(let i=0;i<20;i++) bits.push({x:Math.random(),y:Math.random(),val:Math.random()>0.5?1:0,age:Math.random()*100});
+
+  function draw() {
+    const W=cv.width, H=cv.height;
+    const entropy=G('arEntropy').value/100;
+    G('arEntropyV').textContent=G('arEntropy').value;
+    cx.clearRect(0,0,W,H); cx.fillStyle='#06101e'; cx.fillRect(0,0,W,H);
+
+    const pad={l:50,r:30,t:35,b:55};
+    const pw=W-pad.l-pad.r, ph=H-pad.t-pad.b;
+
+    // Entropy timeline
+    cx.beginPath();
+    for(let i=0;i<=200;i++) {
+      const x=i/200, s=entropy*Math.pow(x,0.7)*(1+0.15*Math.sin(x*8));
+      cx.lineTo(pad.l+x*pw, pad.t+ph*(1-s));
+    }
+    cx.strokeStyle='rgba(248,96,96,0.7)'; cx.lineWidth=2.5; cx.stroke();
+
+    // Information loss markers (Landauer events)
+    bits.forEach((b,i) => {
+      b.age += 0.4*entropy;
+      if(b.age>100) { b.age=0; b.val=1-b.val; b.x=Math.random(); b.y=Math.random()*0.7+0.1; }
+      const bx=pad.l+b.x*pw, by=pad.t+b.y*ph;
+      const alpha=Math.sin(b.age*Math.PI/100)*0.9;
+      if(b.age>50&&b.age<90) {
+        // Landauer erasure event
+        const eProgress=(b.age-50)/40;
+        cx.beginPath(); cx.arc(bx,by,8+eProgress*12,0,TAU);
+        cx.strokeStyle=`rgba(255,180,60,${(1-eProgress)*0.7})`;
+        cx.lineWidth=1.5; cx.stroke();
+        const kT=1.38e-23*300*Math.log(2);
+        cx.font="8px 'Space Mono',monospace"; cx.textAlign='center';
+        cx.fillStyle=`rgba(255,180,60,${(1-eProgress)*0.8})`;
+        cx.fillText(`kT·ln2`,bx,by-16);
+      }
+      cx.beginPath(); cx.arc(bx,by,5,0,TAU);
+      cx.fillStyle=b.val?`rgba(46,232,200,${alpha*0.8})`:`rgba(176,136,248,${alpha*0.8})`;
+      cx.fill();
+    });
+
+    // Axes
+    cx.strokeStyle='rgba(255,180,60,0.25)'; cx.lineWidth=0.8;
+    cx.beginPath(); cx.moveTo(pad.l,pad.t); cx.lineTo(pad.l,pad.t+ph); cx.lineTo(pad.l+pw,pad.t+ph); cx.stroke();
+
+    // Arrow
+    const arX=pad.l+pw*0.6, arY=pad.t+ph*0.35;
+    cx.beginPath(); cx.moveTo(arX,arY); cx.lineTo(arX+80,arY);
+    cx.strokeStyle='rgba(248,96,96,0.8)'; cx.lineWidth=2; cx.stroke();
+    cx.beginPath(); cx.moveTo(arX+80,arY); cx.lineTo(arX+68,arY-6); cx.lineTo(arX+68,arY+6); cx.closePath();
+    cx.fillStyle='rgba(248,96,96,0.8)'; cx.fill();
+
+    cx.font="10px 'Space Mono',monospace"; cx.textAlign='center';
+    cx.fillStyle='rgba(248,96,96,0.7)'; cx.fillText('▬ entropia globalna S', W/2, pad.t+12);
+    cx.fillStyle='rgba(46,232,200,0.6)'; cx.fillText('● bity pamięci materii (0/1)', W/2, pad.t+26);
+    cx.fillStyle='rgba(255,180,60,0.6)'; cx.fillText(`Koszt Landauera = kBT·ln2 · S=${G('arEntropy').value}%`, W/2, H-14);
+    cx.textAlign='right'; cx.fillStyle='rgba(248,96,96,0.7)';
+    cx.fillText('strzałka czasu →', arX+85,arY-6);
+
+    t+=0.02; requestAnimationFrame(draw);
+  }
+  G('arEntropy').oninput=()=>G('arEntropyV').textContent=G('arEntropy').value;
+  lazyCanvas(cv, draw);
+})();
+
+/* ═══ INFO FLOW ═══ */
+(function() {
+  const cv=G('infoCanvas'); if(!cv) return;
+  cv.width=cv.offsetWidth||800; cv.height=360;
+  const cx=cv.getContext('2d');
+  let t=0;
+
+  function draw() {
+    const W=cv.width, H=cv.height;
+    const mass=G('ifMass').value/100, ent=G('ifEnt').value/100;
+    G('ifMassV').textContent=G('ifMass').value;
+    G('ifEntV').textContent=G('ifEnt').value+'%';
+    cx.clearRect(0,0,W,H); cx.fillStyle='#06101e'; cx.fillRect(0,0,W,H);
+
+    const cx0=W/2, cy0=H/2;
+    // Central mass blob
+    const mR=40+mass*50;
+    const mg=cx.createRadialGradient(cx0,cy0,0,cx0,cy0,mR);
+    mg.addColorStop(0,'rgba(255,180,60,0.6)');
+    mg.addColorStop(0.5,'rgba(255,180,60,0.2)');
+    mg.addColorStop(1,'rgba(255,180,60,0)');
+    cx.fillStyle=mg; cx.beginPath(); cx.arc(cx0,cy0,mR,0,TAU); cx.fill();
+    cx.beginPath(); cx.arc(cx0,cy0,mR,0,TAU);
+    cx.strokeStyle='rgba(255,180,60,0.7)'; cx.lineWidth=2; cx.stroke();
+
+    // Info network nodes
+    const N=Math.round(8+mass*10+ent*8);
+    for(let i=0;i<N;i++) {
+      const a=i/N*TAU+t*0.05, r=mR+40+Math.sin(i*2.3+t)*20;
+      const nx=cx0+r*Math.cos(a), ny=cy0+r*Math.sin(a);
+      cx.beginPath(); cx.arc(nx,ny,3+ent*4,0,TAU);
+      const h=185+i*15;
+      cx.fillStyle=`hsla(${h},70%,60%,${0.5+ent*0.4})`; cx.fill();
+      // Connection to center
+      cx.beginPath(); cx.moveTo(cx0,cy0); cx.lineTo(nx,ny);
+      cx.strokeStyle=`hsla(${h},60%,55%,${ent*0.3})`; cx.lineWidth=0.8; cx.stroke();
+    }
+
+    // Info flow arrows
+    const arrows=8;
+    for(let i=0;i<arrows;i++) {
+      const a=i/arrows*TAU+t*0.2, progress=(t*0.5+i*0.13)%1;
+      const r1=mR+5, r2=mR+80;
+      const rx=cx0+lerp(r1,r2,progress)*Math.cos(a);
+      const ry=cy0+lerp(r1,r2,progress)*Math.sin(a);
+      cx.beginPath(); cx.arc(rx,ry,3,0,TAU);
+      cx.fillStyle=`rgba(46,232,200,${(1-progress)*0.8})`; cx.fill();
+    }
+
+    // Holographic boundary
+    const holR=mR+110;
+    cx.beginPath(); cx.arc(cx0,cy0,holR,0,TAU);
+    cx.strokeStyle=`rgba(176,136,248,${0.15+ent*0.2})`; cx.lineWidth=1.5;
+    cx.setLineDash([6,8]); cx.stroke(); cx.setLineDash([]);
+
+    cx.font="10px 'Space Mono',monospace"; cx.textAlign='center';
+    cx.fillStyle='rgba(255,180,60,0.8)'; cx.fillText(`m = ${G('ifMass').value} · S_max ∝ A/4l_P²`, W/2, 22);
+    cx.fillStyle='rgba(46,232,200,0.5)'; cx.fillText(`I(ψ:E) = ${G('ifEnt').value}% · M_c = ${(mass*ent).toFixed(2)}`, W/2, H-14);
+    cx.fillStyle='rgba(176,136,248,0.4)'; cx.fillText('- - holograficzna granica pojemności - -', W/2, cy0-holR-8);
+
+    t+=0.025; requestAnimationFrame(draw);
+  }
+  G('ifMass').oninput=()=>G('ifMassV').textContent=G('ifMass').value;
+  G('ifEnt').oninput=()=>G('ifEntV').textContent=G('ifEnt').value+'%';
+  lazyCanvas(cv, draw);
+})();
+
+/* ═══ MASAH CAPACITY ═══ */
+(function() {
+  const cv=G('masahCanvas'); if(!cv) return;
+  cv.width=cv.offsetWidth||800; cv.height=360;
+  const cx=cv.getContext('2d');
+
+  function draw() {
+    const W=cv.width, H=cv.height;
+    const norm=G('mcNorm').value/100, corr=G('mcCorr').value/100;
+    G('mcNormV').textContent=norm.toFixed(2);
+    G('mcCorrV').textContent=corr.toFixed(2);
+    cx.clearRect(0,0,W,H); cx.fillStyle='#06101e'; cx.fillRect(0,0,W,H);
+
+    const mc=norm*corr;
+    const pad={l:60,r:30,t:40,b:55};
+    const pw=W-pad.l-pad.r, ph=H-pad.t-pad.b;
+
+    // 2D landscape of Mc
+    const imgData=cx.createImageData(W,H);
+    for(let py=0;py<H;py++) for(let px=0;px<W;px++) {
+      if(px<pad.l||px>pad.l+pw||py<pad.t||py>pad.t+ph) continue;
+      const n=(px-pad.l)/pw, c=1-(py-pad.t)/ph;
+      const mc2=n*c;
+      const hue=185+mc2*120;
+      const [r,g,b]=hslToRgb(hue/360,0.7,0.1+mc2*0.45);
+      const idx=(py*W+px)*4;
+      imgData.data[idx]=r; imgData.data[idx+1]=g;
+      imgData.data[idx+2]=b; imgData.data[idx+3]=180;
+    }
+    cx.putImageData(imgData,0,0);
+
+    // Iso-Mc contours
+    for(let level=0.1;level<=0.9;level+=0.2) {
+      cx.beginPath();
+      for(let i=0;i<=200;i++) {
+        const n=i/200, c=level/n;
+        if(c<0||c>1) continue;
+        const x=pad.l+n*pw, y=pad.t+(1-c)*ph;
+        i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+      }
+      cx.strokeStyle=`rgba(255,255,255,${0.1+level*0.15})`; cx.lineWidth=0.8;
+      cx.setLineDash([3,5]); cx.stroke(); cx.setLineDash([]);
+      cx.font="8px 'Space Mono',monospace"; cx.textAlign='left';
+      const tx=pad.l+level*pw*0.9, ty=pad.t+(1-level)*ph-5;
+      if(ty>pad.t+8&&ty<pad.t+ph-8) { cx.fillStyle='rgba(255,255,255,0.4)'; cx.fillText(`M_c=${level.toFixed(1)}`,tx,ty); }
+    }
+
+    // Current point
+    const curX=pad.l+norm*pw, curY=pad.t+(1-corr)*ph;
+    cx.beginPath(); cx.arc(curX,curY,10,0,TAU);
+    cx.fillStyle='rgba(255,180,60,0.9)'; cx.fill();
+    cx.beginPath(); cx.arc(curX,curY,16,0,TAU);
+    cx.strokeStyle='rgba(255,180,60,0.5)'; cx.lineWidth=2; cx.stroke();
+
+    // Axes labels
+    cx.strokeStyle='rgba(255,180,60,0.3)'; cx.lineWidth=1;
+    cx.beginPath(); cx.moveTo(pad.l,pad.t); cx.lineTo(pad.l,pad.t+ph); cx.lineTo(pad.l+pw,pad.t+ph); cx.stroke();
+    cx.font="9px 'Space Mono',monospace"; cx.textAlign='center';
+    cx.fillStyle='rgba(46,232,200,0.5)'; cx.fillText('||ψ||² (norma stanu)', pad.l+pw/2,H-12);
+    cx.save(); cx.translate(18,pad.t+ph/2); cx.rotate(-Math.PI/2);
+    cx.fillStyle='rgba(255,180,60,0.5)'; cx.fillText('I(ψ:E) (informacja wzajemna)',0,0); cx.restore();
+    cx.fillStyle='rgba(255,180,60,0.9)';
+    cx.fillText(`M_c = ||ψ||² · I(ψ:E) = ${mc.toFixed(3)}`, W/2, 22);
+  }
+  G('mcNorm').oninput=draw; G('mcCorr').oninput=draw;
+  lazyCanvas(cv, draw);
+})();
+
+/* ═══ BOOK OF MATTER ═══ */
+(function() {
+  const cv=G('bookCanvas'); if(!cv) return;
+  cv.width=cv.offsetWidth||800; cv.height=360;
+  const cx=cv.getContext('2d');
+  let t=0;
+  const lines=[];
+  for(let i=0;i<22;i++) lines.push({y:30+i*14, written:Math.random()*0.8, color:`hsla(${185+i*8},70%,60%,0.7)`, speed:0.003+Math.random()*0.005});
+
+  function draw() {
+    const W=cv.width, H=cv.height;
+    cx.clearRect(0,0,W,H); cx.fillStyle='#06101e'; cx.fillRect(0,0,W,H);
+
+    // Book border
+    const bx=40, by=20, bw=W-80, bh=H-45;
+    cx.fillStyle='rgba(12,20,40,0.9)'; cx.fillRect(bx,by,bw,bh);
+    cx.strokeStyle='rgba(255,180,60,0.3)'; cx.lineWidth=1.5; cx.strokeRect(bx,by,bw,bh);
+    // Page line
+    cx.beginPath(); cx.moveTo(W/2,by+8); cx.lineTo(W/2,by+bh-8);
+    cx.strokeStyle='rgba(255,180,60,0.15)'; cx.lineWidth=0.8; cx.stroke();
+
+    // Left page: past (written)
+    cx.font="9px 'Space Mono',monospace";
+    cx.fillStyle='rgba(160,185,255,0.3)'; cx.textAlign='left';
+    cx.fillText('PRZESZŁOŚĆ · REZYDUUM',bx+12,by+18);
+
+    lines.forEach(line => {
+      line.written = Math.min(1, line.written + line.speed);
+      const maxW=(W/2-bx-20)*0.9;
+      const writtenW=line.written*maxW;
+      // Written text bar
+      cx.fillStyle=line.color;
+      cx.fillRect(bx+10, line.y, writtenW, 4);
+      // Ink droplet at writing point
+      if(line.written<0.99) {
+        cx.beginPath(); cx.arc(bx+10+writtenW,line.y+2,2.5,0,TAU);
+        cx.fillStyle='rgba(255,180,60,0.9)'; cx.fill();
+      }
+    });
+
+    // Right page: future (probability)
+    cx.fillStyle='rgba(160,185,255,0.3)'; cx.textAlign='left';
+    cx.fillText('PRZYSZŁOŚĆ · MATRYCA', W/2+12, by+18);
+
+    for(let i=0;i<18;i++) {
+      const ry=by+25+i*17;
+      const prob=Math.abs(Math.sin(t*0.3+i*0.7));
+      const maxW=(W/2-bx-30)*0.85;
+      // Probability bar (fading)
+      const grad=cx.createLinearGradient(W/2+10,ry,W/2+10+maxW,ry);
+      grad.addColorStop(0,`hsla(${185+i*10},70%,60%,${0.3+prob*0.4})`);
+      grad.addColorStop(1,'rgba(46,232,200,0)');
+      cx.fillStyle=grad;
+      cx.fillRect(W/2+10, ry, maxW, 3+prob*4);
+    }
+
+    // Spine / time axis
+    cx.fillStyle='rgba(255,180,60,0.5)'; cx.textAlign='center';
+    cx.font="8px 'Space Mono',monospace";
+    cx.fillText('τ →', W/2, H-12);
+    cx.fillText('atrament = masa·Δt', W/4, H-12);
+    cx.fillText('amplitudy = U(t)|ψ⟩', 3*W/4, H-12);
+
+    // Writing quill (animated)
+    const qLine=Math.floor((t*0.5)%22);
+    const qX=bx+10+lines[qLine].written*(W/2-bx-20)*0.9;
+    const qY=lines[qLine].y;
+    cx.beginPath();
+    cx.moveTo(qX+15,qY-20); cx.quadraticCurveTo(qX+5,qY-5,qX,qY);
+    cx.strokeStyle='rgba(255,212,138,0.7)'; cx.lineWidth=1.5; cx.stroke();
+
+    t+=0.02; requestAnimationFrame(draw);
+  }
+  lazyCanvas(cv, draw);
+})();
+
+/* ═══ SYNTHESIS TRIANGLE ═══ */
+(function() {
+  const cv=G('synthTriangle'); if(!cv) return;
+  cv.width=cv.offsetWidth||800; cv.height=400;
+  const cx=cv.getContext('2d');
+  let t=0;
+
+  const vertices=[
+    {lbl:'m\nMasa', sub:'koszt lokalizacji\nm_f = y_f·v/√2', x:0.5, y:0.1, col:'#ffb43c'},
+    {lbl:'τ\nCzas własny', sub:'historia trajektorii\ndτ = √(g_μν dx^μ dx^ν)', x:0.12, y:0.88, col:'#2ee8c8'},
+    {lbl:'I\nInformacja', sub:'treść historii\nS = -Tr(ρ ln ρ)', x:0.88, y:0.88, col:'#b088f8'}
+  ];
+  const edges=[
+    {a:0,b:1,lbl:'czas masy = koszt historii',col:'rgba(255,180,60,0.5)'},
+    {a:0,b:2,lbl:'masa wyznacza pojemność info',col:'rgba(255,180,60,0.5)'},
+    {a:1,b:2,lbl:'historia = zakumulowana informacja',col:'rgba(46,232,200,0.4)'}
+  ];
+
+  function vPos(v, W, H) { return {x:v.x*W, y:v.y*H}; }
+
+  function draw() {
+    const W=cv.width, H=cv.height;
+    cx.clearRect(0,0,W,H); cx.fillStyle='#06101e'; cx.fillRect(0,0,W,H);
+
+    // Background triangle fill
+    const [v0,v1,v2]=vertices.map(v=>vPos(v,W,H));
+    cx.beginPath(); cx.moveTo(v0.x,v0.y); cx.lineTo(v1.x,v1.y); cx.lineTo(v2.x,v2.y); cx.closePath();
+    const tg=cx.createLinearGradient(0,0,W,H);
+    tg.addColorStop(0,'rgba(255,180,60,0.04)');
+    tg.addColorStop(0.5,'rgba(46,232,200,0.04)');
+    tg.addColorStop(1,'rgba(176,136,248,0.04)');
+    cx.fillStyle=tg; cx.fill();
+
+    // Edges with flow
+    edges.forEach((e,i)=>{
+      const va=vPos(vertices[e.a],W,H), vb=vPos(vertices[e.b],W,H);
+      cx.beginPath(); cx.moveTo(va.x,va.y); cx.lineTo(vb.x,vb.y);
+      cx.strokeStyle=e.col; cx.lineWidth=2; cx.stroke();
+      // Flow particle
+      const progress=(t*0.3+i*0.33)%1;
+      const fx=lerp(va.x,vb.x,progress), fy=lerp(va.y,vb.y,progress);
+      cx.beginPath(); cx.arc(fx,fy,4,0,TAU);
+      cx.fillStyle=e.col.replace('0.5','0.9').replace('0.4','0.9'); cx.fill();
+      // Edge label
+      const mx=(va.x+vb.x)/2, my=(va.y+vb.y)/2;
+      cx.font="8px 'Space Mono',monospace"; cx.textAlign='center';
+      cx.fillStyle='rgba(160,185,255,0.45)'; cx.fillText(e.lbl,mx,my+14);
+    });
+
+    // Return arrows (bidirectional)
+    edges.forEach((e,i)=>{
+      const va=vPos(vertices[e.a],W,H), vb=vPos(vertices[e.b],W,H);
+      const progress=(t*0.3+i*0.33+0.5)%1;
+      const fx=lerp(vb.x,va.x,progress), fy=lerp(vb.y,va.y,progress);
+      cx.beginPath(); cx.arc(fx,fy,3,0,TAU);
+      cx.fillStyle=e.col.replace('0.5','0.5').replace('0.4','0.4'); cx.fill();
+    });
+
+    // Vertex nodes
+    vertices.forEach(v=>{
+      const {x,y}=vPos(v,W,H);
+      const pulse=1+0.06*Math.sin(t*0.5+vertices.indexOf(v)*2.1);
+      // Glow
+      const gg=cx.createRadialGradient(x,y,0,x,y,55*pulse);
+      gg.addColorStop(0,v.col+'44'); gg.addColorStop(1,v.col+'00');
+      cx.fillStyle=gg; cx.beginPath(); cx.arc(x,y,55*pulse,0,TAU); cx.fill();
+      // Node
+      cx.beginPath(); cx.arc(x,y,30*pulse,0,TAU);
+      cx.fillStyle=v.col+'22'; cx.fill();
+      cx.strokeStyle=v.col; cx.lineWidth=2; cx.stroke();
+      // Label
+      const lines=v.lbl.split('\n');
+      cx.font="bold 16px 'Syncopate',sans-serif"; cx.textAlign='center';
+      cx.fillStyle=v.col; cx.fillText(lines[0],x,y+5);
+      cx.font="9px 'Space Mono',monospace";
+      cx.fillStyle=v.col; cx.fillText(lines[1],x,y+22);
+      // Sub
+      v.sub.split('\n').forEach((s,si) => {
+        cx.font="8px 'Space Mono',monospace";
+        cx.fillStyle='rgba(160,185,255,0.5)';
+        cx.fillText(s, x, y+40+si*12);
+      });
+    });
+
+    // Center: Mc
+    cx.font="bold 14px 'Syncopate',sans-serif"; cx.textAlign='center';
+    cx.fillStyle=`rgba(255,255,255,${0.6+0.3*Math.sin(t*0.4)})`;
+    cx.fillText('M_c', W/2, H/2+5);
+    cx.font="8px 'Space Mono',monospace"; cx.fillStyle='rgba(255,255,255,0.4)';
+    cx.fillText('masah-capacity', W/2, H/2+20);
+
+    t+=0.02; requestAnimationFrame(draw);
+  }
+  lazyCanvas(cv, draw);
+})();
+
+/* ── HSL to RGB helper ── */
+function hslToRgb(h,s,l){
+  let r,g,b;
+  if(s===0){r=g=b=l;}
+  else{
+    const hue2rgb=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;};
+    const q=l<0.5?l*(1+s):l+s-l*s,p=2*l-q;
+    r=hue2rgb(p,q,h+1/3); g=hue2rgb(p,q,h); b=hue2rgb(p,q,h-1/3);
+  }
+  return[~~(r*255),~~(g*255),~~(b*255)];
+}
+</script>
+</body>
+</html>
